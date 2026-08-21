@@ -12,3 +12,5 @@ J'ai pas encore d'idée pour ce projet.
 ## Mes 3 sites préférés
 - BDFM /https://bitmap.designfamilymarket.com
 - ...
+ 
+_Repo cloné et ouvert dans VS Code._
