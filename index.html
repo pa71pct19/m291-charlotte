@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Charlotte – Médiamaticienne</title>
+<style>
+  /* Couleurs sobres et deux polices seulement */
+  :root {
+    --couleur-fond: #f5f4f1;
+    --couleur-carte: #ffffff;
+    --couleur-texte: #2b2b2b;
+    --couleur-accent: #3a5a6b;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background-color: var(--couleur-fond);
+    color: var(--couleur-texte);
+    display: flex;
+    justify-content: center;
+    padding: 2rem 1rem;
+    line-height: 1.6;
+  }
+
+  main {
+    background-color: var(--couleur-carte);
+    border-radius: 12px;
+    padding: 2rem;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  }
+
+  h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 2rem;
+    color: var(--couleur-accent);
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+
+  p.intro {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.2rem;
+    color: var(--couleur-accent);
+    margin-bottom: 0.8rem;
+  }
+
+  /* Liste des compétences */
+  ul.competences {
+    list-style: none;
+    margin-bottom: 1.8rem;
+  }
+
+  ul.competences li {
+    background-color: var(--couleur-fond);
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 0.6rem;
+    border-left: 4px solid var(--couleur-accent);
+  }
+
+  a.lien-github {
+    display: block;
+    text-align: center;
+    background-color: var(--couleur-accent);
+    color: #ffffff;
+    text-decoration: none;
+    padding: 0.8rem;
+    border-radius: 8px;
+    font-weight: bold;
+  }
+
+  a.lien-github:hover {
+    opacity: 0.9;
+  }
+
+  /* Adaptation pour petits écrans */
+  @media (max-width: 400px) {
+    h1 {
+      font-size: 1.6rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<main>
+  <h1>Charlotte</h1>
+  <p class="intro">Je suis médiamaticienne et ma branche préférée est le design.</p>
+
+  <h2>Mes compétences et envies</h2>
+  <ul class="competences">
+    <li>Design graphique et mise en page</li>
+    <li>Photographie</li>
+    <li>Découverte du code web</li>
+  </ul>
+
+  <a class="lien-github" href="https://github.com/pa71pct19/m291-charlotte" target="_blank" rel="noopener">
+    Voir mon GitHub
+  </a>
+</main>
+
+</body>
+</html>
