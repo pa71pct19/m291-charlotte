@@ -9,3 +9,6 @@ Je suis médiamaticienne en formation accélérée en deuxième année.
 J'ai pas encore d'idée pour ce projet.
 ## Comment me trouver
 - GitHub : pa71pct19
+## Mes 3 sites préférés
+- BDFM /https://bitmap.designfamilymarket.com/#/
+- ...
