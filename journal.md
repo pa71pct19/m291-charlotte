@@ -8,3 +8,7 @@
 Exercice e1-6
 
 Exercice e1-7
+
+## Semaine 4
+Réflexion et choix du thème pour le projet. 
+Création du persona, du pitch et du user-flow et du brief 
