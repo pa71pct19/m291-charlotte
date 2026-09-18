@@ -17,8 +17,6 @@ Trouver une recette saine et sans trop d'effort rapidement
 6. Arrive sur la fiche recette : ingrédients, temps, étapes
 
 
-*(Ajoutez ou retirez des cases. 4 à 7.)*
-
 ## Variante d'échec (optionnel)
 
 Si ça rate, l'écran dit… "Aucune recette trouvée: essaiez une autre recette ou explorez dans la liste complète"

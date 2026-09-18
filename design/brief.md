@@ -11,10 +11,10 @@ Pense en ingrédients disponibles et temps de préparation, pas en noms de plats
 Abandonne vite si c'est lent, chargé ou peu clair
 
 **3. Écrans**
-Accueil / liste des recettes
-Recherche / filtre par ingrédient
+Accueil 
+Recherche / filtre 
 Détail d'une recette
-Écran "aucun résultat"
+Aucun résultat
 
 **4. Contenu de chaque écran**
 

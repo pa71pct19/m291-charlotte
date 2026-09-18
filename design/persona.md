@@ -2,6 +2,7 @@
 
 **Prénom et âge :**
 Léa, 21 ans
+
 **Occupation :**
 Éudiante vivant seule et ayant beaucoup de cours et d'activités à côté comme le sport. 
 
@@ -23,5 +24,5 @@ Des recettes trop complexes et longues, une pub avant chaque recette.
 **3 faits utiles pour le design**
 
 1. Elle scrolle vite, sur téléphone, souvent une main occupée : les boutons doivent être gros et accessibles au pouce.
-2.Elle pense en ingrédients disponibles, pas en nom de plat : la recherche/filtre par ingrédient doit être mise en avant.
+2. Elle pense en ingrédients disponibles, pas en nom de plat : la recherche/filtre par ingrédient doit être mise en avant.
 3. Elle veut voir le temps de prépa et la difficulté d'un coup d'œil, sans ouvrir la fiche complète.
