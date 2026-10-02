@@ -1,0 +1,1045 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<title>Greenplate — Chaleureux (interactif)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * { -webkit-font-smoothing: antialiased; box-sizing: border-box; }
+  body { margin:0; background:#EDEDEA; font-family:'Poppins',sans-serif; }
+  .topbar { position:sticky; top:0; z-index:20; background:#5A3A26; color:#FBF1E6; padding:18px 28px; display:flex; align-items:center; gap:18px; flex-wrap:wrap; }
+  .topbar h1 { font-size:17px; margin:0; font-weight:700; }
+  .topbar .subtitle { font-size:12px; color:#D9BFA6; }
+  .device-switch { display:flex; gap:6px; margin-left:auto; }
+  .device-switch button, .tab-btn { all:unset; cursor:pointer; font-family:inherit; font-size:12px; padding:8px 14px; border-radius:20px; background:#7A4A2E; color:#F3DFC9; white-space:nowrap; }
+  .device-switch button.active { background:#FBF1E6; color:#5A3A26; font-weight:700; }
+  .tabs { display:flex; gap:8px; padding:16px 28px 0 28px; flex-wrap:wrap; }
+  .tab-btn.active { background:#5A3A26; color:#FBF1E6; font-weight:700; }
+  .stage { padding:28px; display:flex; justify-content:center; }
+  .device-frame { border-radius:28px; overflow:hidden; box-shadow:0 14px 40px rgba(60,40,20,0.22); }
+  .device-frame.desktop { border-radius:14px; max-width:100%; overflow-x:auto; }
+  .device-group { display:flex; justify-content:center; width:100%; }
+  .chip[data-selected="true"] { font-weight:600; }
+  .ing-check[data-checked="false"] .box { background:transparent !important; }
+  .ing-check[data-checked="false"] .lbl { text-decoration: line-through; opacity:0.5; }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <h1>Greenplate — Chaleureux <span style="font-weight:400;">(maquette retenue, interactive)</span></h1>
+    <span class="subtitle">Chips, recherche, filtre, cases à cocher et carrousel fonctionnent réellement.</span>
+    <div class="device-switch">
+      <button type="button" id="btn-mobile" class="active" onclick="showDevice('mobile')">Mobile</button>
+      <button type="button" id="btn-desktop" onclick="showDevice('desktop')">Desktop</button>
+    </div>
+  </div>
+
+  <div class="tabs" id="tabs-mobile"><button type="button" class="tab-btn" onclick="go('accueil')" data-tab="accueil">Accueil</button><button type="button" class="tab-btn" onclick="go('recherche')" data-tab="recherche">Recherche / filtre</button><button type="button" class="tab-btn" onclick="go('detail')" data-tab="detail">Détail recette</button><button type="button" class="tab-btn" onclick="go('aucun')" data-tab="aucun">Aucun résultat</button></div>
+  <div class="tabs" id="tabs-desktop" style="display:none;"><button type="button" class="tab-btn" onclick="go('d-accueil')" data-tab="d-accueil">Accueil — desktop</button><button type="button" class="tab-btn" onclick="go('d-recherche')" data-tab="d-recherche">Recherche / filtre — desktop</button><button type="button" class="tab-btn" onclick="go('d-detail')" data-tab="d-detail">Détail recette — desktop</button><button type="button" class="tab-btn" onclick="go('d-aucun')" data-tab="d-aucun">Aucun résultat — desktop</button></div>
+
+  <div class="stage">
+    <div class="device-group" id="group-mobile">
+      <div class="device-frame"><div class="screen" id="accueil" style="display:flex;">
+    <div style="width:390px;height:844px;box-sizing:border-box;background:#FBF1E6;display:flex;flex-direction:column;overflow:hidden;font-family:'Poppins',sans-serif;">
+      <div style="flex-shrink:0;padding:22px 20px 16px 20px;display:flex;align-items:center;justify-content:space-between;"><div style="font-family:'Caladea',serif;font-weight:700;font-size:22px;color:#8A5A3E;letter-spacing:-0.3px;">Greenplate</div></div>
+      <div style="flex-shrink:0;padding:0 20px 16px 20px;display:flex;flex-direction:column;gap:10px;">
+        <div style="font-size:12px;font-weight:600;color:#8A7264;text-transform:uppercase;letter-spacing:0.6px;">Inspiration de plats</div>
+        <div style="position:relative;height:150px;border-radius:20px;background:#E4E7C9;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+          <div class="carousel-slide" data-slide="0" style="display:flex;flex-direction:column;align-items:center;gap:8px;color:#93A876;">
+          <svg viewBox="0 0 120 120" width="96" height="96" role="img" aria-label="Illustration du plat">
+      <ellipse cx="60" cy="88" rx="44" ry="9" fill="#00000010"/>
+      <circle cx="60" cy="62" r="42" fill="#FFFCF7"/>
+      <circle cx="60" cy="62" r="42" fill="none" stroke="#F2E2CC" stroke-width="2"/>
+      <ellipse cx="43" cy="48" rx="17" ry="13" fill="#8FAE6E"/>
+      <ellipse cx="81" cy="54" rx="13" ry="10" fill="#E7A98F"/>
+      <ellipse cx="54" cy="81" rx="11" ry="8" fill="#F0C9A0"/>
+      <path d="M38 40c4-10 10-16 14-18" stroke="#6B8F5C" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg>
+          <div style="font-family:'Caladea',serif;font-weight:700;font-size:14px;color:#3A2E27;">Bowl de quinoa croquant</div>
+        </div><div class="carousel-slide" data-slide="1" style="display:none;flex-direction:column;align-items:center;gap:8px;color:#93A876;">
+          <svg viewBox="0 0 120 120" width="96" height="96" role="img" aria-label="Illustration du plat">
+      <ellipse cx="60" cy="88" rx="44" ry="9" fill="#00000010"/>
+      <circle cx="60" cy="62" r="42" fill="#FFFCF7"/>
+      <circle cx="60" cy="62" r="42" fill="none" stroke="#F2E2CC" stroke-width="2"/>
+      <ellipse cx="50" cy="55" rx="17" ry="13" fill="#C97B5F"/>
+      <ellipse cx="74" cy="61" rx="13" ry="10" fill="#E8C468"/>
+      <ellipse cx="61" cy="74" rx="11" ry="8" fill="#8FAE6E"/>
+      <path d="M38 40c4-10 10-16 14-18" stroke="#6B8F5C" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg>
+          <div style="font-family:'Caladea',serif;font-weight:700;font-size:14px;color:#3A2E27;">Soupe de courgettes au basilic</div>
+        </div><div class="carousel-slide" data-slide="2" style="display:none;flex-direction:column;align-items:center;gap:8px;color:#93A876;">
+          <svg viewBox="0 0 120 120" width="96" height="96" role="img" aria-label="Illustration du plat">
+      <ellipse cx="60" cy="88" rx="44" ry="9" fill="#00000010"/>
+      <circle cx="60" cy="62" r="42" fill="#FFFCF7"/>
+      <circle cx="60" cy="62" r="42" fill="none" stroke="#F2E2CC" stroke-width="2"/>
+      <ellipse cx="47" cy="54" rx="17" ry="13" fill="#D97D66"/>
+      <ellipse cx="77" cy="60" rx="13" ry="10" fill="#F0C9A0"/>
+      <ellipse cx="60" cy="77" rx="11" ry="8" fill="#93A876"/>
+      <path d="M38 40c4-10 10-16 14-18" stroke="#6B8F5C" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg>
+          <div style="font-family:'Caladea',serif;font-weight:700;font-size:14px;color:#3A2E27;">Wrap avocat et poulet grillé</div>
+        </div>
+          <button type="button" aria-label="Plat précédent" onclick="carouselMove(-1)" style="all:unset;cursor:pointer;position:absolute;left:10px;top:50%;transform:translateY(-50%);width:28px;height:28px;border-radius:50%;background:#FFFBF6;display:flex;align-items:center;justify-content:center;color:#3A2E27;box-shadow:0 1px 4px rgba(0,0,0,0.12);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3A2E27" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+          <button type="button" aria-label="Plat suivant" onclick="carouselMove(1)" style="all:unset;cursor:pointer;position:absolute;right:10px;top:50%;transform:translateY(-50%);width:28px;height:28px;border-radius:50%;background:#FFFBF6;display:flex;align-items:center;justify-content:center;color:#3A2E27;box-shadow:0 1px 4px rgba(0,0,0,0.12);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3A2E27" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+        </div>
+        <div style="display:flex;gap:6px;justify-content:center;padding-top:2px;"><div class="carousel-dot" data-dot="0" style="width:6px;height:6px;border-radius:50%;background:#E7A98F;"></div><div class="carousel-dot" data-dot="1" style="width:6px;height:6px;border-radius:50%;background:#E7D3BC;"></div><div class="carousel-dot" data-dot="2" style="width:6px;height:6px;border-radius:50%;background:#E7D3BC;"></div></div>
+      </div>
+      <div style="flex-shrink:0;padding:4px 20px 16px 20px;">
+        <button type="button" onclick="go('recherche')" aria-label="Rechercher un ingrédient" style="all:unset;box-sizing:border-box;cursor:pointer;
+          width:100%;height:50px;border-radius:25px;background:#C97B5F;display:flex;align-items:center;
+          padding:0 16px;gap:10px;color:#FFFBF6;font-family:'Poppins',sans-serif;font-size:14px;font-weight:600;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFBF6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><span style="flex-grow:1;">Rechercher un ingrédient</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFFBF6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+      </div>
+      <div style="flex-shrink:0;padding:6px 20px 10px 20px;font-family:'Caladea',serif;font-weight:700;font-size:17px;color:#3A2E27;">Toutes les recettes</div>
+      <div style="flex-grow:1;overflow:auto;padding:2px 20px 20px 20px;display:flex;flex-direction:column;gap:12px;"><button type="button" class="recipe-row" data-tags="quinoa" data-minutes="15" data-name="bowl de quinoa croquant"
+      onclick="go('detail')" aria-label="Voir la recette Bowl de quinoa croquant" style="all:unset;box-sizing:border-box;cursor:pointer;
+      display:flex;gap:14px;align-items:center;padding:12px;background:#FFFBF6;border-radius:20px;
+      border:1px solid #F2E2CC;box-shadow:0 2px 10px rgba(122,74,46,0.06);width:100%;">
+      <div style="width:60px;height:60px;flex-shrink:0;border-radius:14px;background:#E4E7C9;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+        <svg viewBox="0 0 120 120" width="56" height="56" role="img" aria-label="Illustration du plat">
+      <ellipse cx="60" cy="88" rx="44" ry="9" fill="#00000010"/>
+      <circle cx="60" cy="62" r="42" fill="#FFFCF7"/>
+      <circle cx="60" cy="62" r="42" fill="none" stroke="#F2E2CC" stroke-width="2"/>
+      <ellipse cx="43" cy="48" rx="17" ry="13" fill="#8FAE6E"/>
+      <ellipse cx="81" cy="54" rx="13" ry="10" fill="#E7A98F"/>
+      <ellipse cx="54" cy="81" rx="11" ry="8" fill="#F0C9A0"/>
+      <path d="M38 40c4-10 10-16 14-18" stroke="#6B8F5C" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg>
+      </div>
+      <div style="flex-grow:1;display:flex;flex-direction:column;gap:5px;min-width:0;text-align:left;">
+        <div style="font-family:'Caladea',serif;font-weight:700;font-size:15px;color:#3A2E27;">Bowl de quinoa croquant</div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:#8A7264;font-family:'Poppins',sans-serif;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A7264" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 15 min · Facile
+        </div>
+      </div>
+      <div style="flex-shrink:0;font-size:10px;font-weight:700;background:#E7A98F;color:#FFFBF6;border-radius:12px;padding:3px 9px;font-family:'Poppins',sans-serif;">sain</div>
+    </button><button type="button" class="recipe-row" data-tags="courgette" data-minutes="20" data-name="soupe de courgettes au basilic"
+      onclick="go('detail')" aria-label="Voir la recette Soupe de courgettes au basilic" style="all:unset;box-sizing:border-box;cursor:pointer;
+      display:flex;gap:14px;align-items:center;padding:12px;background:#FFFBF6;border-radius:20px;
+      border:1px solid #F2E2CC;box-shadow:0 2px 10px rgba(122,74,46,0.06);width:100%;">
+      <div style="width:60px;height:60px;flex-shrink:0;border-radius:14px;background:#E4E7C9;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+        <svg viewBox="0 0 120 120" width="56" height="56" role="img" aria-label="Illustration du plat">
+      <ellipse cx="60" cy="88" rx="44" ry="9" fill="#00000010"/>
+      <circle cx="60" cy="62" r="42" fill="#FFFCF7"/>
+      <circle cx="60" cy="62" r="42" fill="none" stroke="#F2E2CC" stroke-width="2"/>
+      <ellipse cx="50" cy="55" rx="17" ry="13" fill="#C97B5F"/>
+      <ellipse cx="74" cy="61" rx="13" ry="10" fill="#E8C468"/>
+      <ellipse cx="61" cy="74" rx="11" ry="8" fill="#8FAE6E"/>
+      <path d="M38 40c4-10 10-16 14-18" stroke="#6B8F5C" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg>
+      </div>
+      <div style="flex-grow:1;display:flex;flex-direction:column;gap:5px;min-width:0;text-align:left;">
+        <div style="font-family:'Caladea',serif;font-weight:700;font-size:15px;color:#3A2E27;">Soupe de courgettes au basilic</div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:#8A7264;font-family:'Poppins',sans-serif;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A7264" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 20 min · Facile
+        </div>
+      </div>
+      <div style="flex-shrink:0;font-size:10px;font-weight:700;background:#E7A98F;color:#FFFBF6;border-radius:12px;padding:3px 9px;font-family:'Poppins',sans-serif;">sain</div>
+    </button><button type="button" class="recipe-row" data-tags="avocat,poulet" data-minutes="10" data-name="wrap avocat et poulet grillé"
+      onclick="go('detail')" aria-label="Voir la recette Wrap avocat et poulet grillé" style="all:unset;box-sizing:border-box;cursor:pointer;
+      display:flex;gap:14px;align-items:center;padding:12px;background:#FFFBF6;border-radius:20px;
+      border:1px solid #F2E2CC;box-shadow:0 2px 10px rgba(122,74,46,0.06);width:100%;">
+      <div style="width:60px;height:60px;flex-shrink:0;border-radius:14px;background:#E4E7C9;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+        <svg viewBox="0 0 120 120" width="56" height="56" role="img" aria-label="Illustration du plat">
+      <ellipse cx="60" cy="88" rx="44" ry="9" fill="#00000010"/>
+      <circle cx="60" cy="62" r="42" fill="#FFFCF7"/>
+      <circle cx="60" cy="62" r="42" fill="none" stroke="#F2E2CC" stroke-width="2"/>
+      <ellipse cx="47" cy="54" rx="17" ry="13" fill="#D97D66"/>
+      <ellipse cx="77" cy="60" rx="13" ry="10" fill="#F0C9A0"/>
+      <ellipse cx="60" cy="77" rx="11" ry="8" fill="#93A876"/>
+      <path d="M38 40c4-10 10-16 14-18" stroke="#6B8F5C" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg>
+      </div>
+      <div style="flex-grow:1;display:flex;flex-direction:column;gap:5px;min-width:0;text-align:left;">
+        <div style="font-family:'Caladea',serif;font-weight:700;font-size:15px;color:#3A2E27;">Wrap avocat et poulet grillé</div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:#8A7264;font-family:'Poppins',sans-serif;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A7264" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 10 min · Facile
+        </div>
+      </div>
+      <div style="flex-shrink:0;font-size:10px;font-weight:700;background:#E7A98F;color:#FFFBF6;border-radius:12px;padding:3px 9px;font-family:'Poppins',sans-serif;">sain</div>
+    </button><button type="button" class="recipe-row" data-tags="" data-minutes="30" data-name="curry de lentilles corail"
+      onclick="go('detail')" aria-label="Voir la recette Curry de lentilles corail" style="all:unset;box-sizing:border-box;cursor:pointer;
+      display:flex;gap:14px;align-items:center;padding:12px;background:#FFFBF6;border-radius:20px;
+      border:1px solid #F2E2CC;box-shadow:0 2px 10px rgba(122,74,46,0.06);width:100%;">
+      <div style="width:60px;height:60px;flex-shrink:0;border-radius:14px;background:#E4E7C9;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+        <svg viewBox="0 0 120 120" width="56" height="56" role="img" aria-label="Illustration du plat">
+      <ellipse cx="60" cy="88" rx="44" ry="9" fill="#00000010"/>
+      <circle cx="60" cy="62" r="42" fill="#FFFCF7"/>
+      <circle cx="60" cy="62" r="42" fill="none" stroke="#F2E2CC" stroke-width="2"/>
+      <ellipse cx="44" cy="53" rx="17" ry="13" fill="#E8C468"/>
+      <ellipse cx="80" cy="59" rx="13" ry="10" fill="#C97B5F"/>
+      <ellipse cx="59" cy="80" rx="11" ry="8" fill="#8FAE6E"/>
+      <path d="M38 40c4-10 10-16 14-18" stroke="#6B8F5C" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg>
+      </div>
+      <div style="flex-grow:1;display:flex;flex-direction:column;gap:5px;min-width:0;text-align:left;">
+        <div style="font-family:'Caladea',serif;font-weight:700;font-size:15px;color:#3A2E27;">Curry de lentilles corail</div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:#8A7264;font-family:'Poppins',sans-serif;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A7264" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 30 min · Moyen
+        </div>
+      </div>
+      <div style="flex-shrink:0;font-size:10px;font-weight:700;background:#E7A98F;color:#FFFBF6;border-radius:12px;padding:3px 9px;font-family:'Poppins',sans-serif;">sain</div>
+    </button></div>
+    </div></div><div class="screen" id="recherche" style="display:none;">
+    <div style="width:390px;height:844px;box-sizing:border-box;background:#FBF1E6;display:flex;flex-direction:column;overflow:hidden;font-family:'Poppins',sans-serif;">
+      <div style="flex-shrink:0;padding:22px 20px 16px 20px;display:flex;align-items:center;justify-content:space-between;"><button type="button" onclick="go('accueil')" style="all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:10px;">
+      <span style="width:32px;height:32px;border-radius:9px;border:1px solid #EAD3B8;display:flex;align-items:center;justify-content:center;color:#3A2E27;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3A2E27" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg></span>
+      <span style="font-size:13px;color:#8A7264;font-family:'Poppins',sans-serif;">Retour</span>
+    </button></div>
+      <div style="flex-shrink:0;padding:0 20px 14px 20px;font-family:'Caladea',serif;font-weight:700;font-size:18px;color:#3A2E27;">Recherche par ingrédient</div>
+      <div style="flex-shrink:0;padding:0 20px 14px 20px;position:relative;">
+        <span style="position:absolute;left:34px;top:50%;transform:translateY(-50%);color:#93A876;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#93A876" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span>
+        <input type="search" id="searchbox" oninput="applyFilter('')" placeholder="Rechercher un ingrédient…" style="width:100%;box-sizing:border-box;height:46px;border:2px solid #93A876;border-radius:25px;padding:0 14px 0 42px;font-size:14px;font-family:'Poppins',sans-serif;background:#FFFBF6;color:#3A2E27;">
+      </div>
+      <div style="flex-shrink:0;padding:0 20px 16px 20px;display:flex;flex-wrap:wrap;gap:8px;"><button type="button" class="chip" data-group="ing" data-value="courgette" onclick="selectChip(this)"  style="all:unset;cursor:pointer;border:1px solid #93A876;background:#E4E7C9;color:#3A2E27;border-radius:20px;padding:6px 13px;font-size:12px;font-family:'Poppins',sans-serif;white-space:nowrap;">Courgette</button><button type="button" class="chip" data-group="ing" data-value="riz" onclick="selectChip(this)"  style="all:unset;cursor:pointer;border:1px solid #EAD3B8;background:transparent;color:#3A2E27;border-radius:20px;padding:6px 13px;font-size:12px;font-family:'Poppins',sans-serif;white-space:nowrap;">Riz</button><button type="button" class="chip" data-group="ing" data-value="poulet" onclick="selectChip(this)"  style="all:unset;cursor:pointer;border:1px solid #EAD3B8;background:transparent;color:#3A2E27;border-radius:20px;padding:6px 13px;font-size:12px;font-family:'Poppins',sans-serif;white-space:nowrap;">Poulet</button><button type="button" class="chip" data-group="ing" data-value="avocat" onclick="selectChip(this)"  style="all:unset;cursor:pointer;border:1px solid #EAD3B8;background:transparent;color:#3A2E27;border-radius:20px;padding:6px 13px;font-size:12px;font-family:'Poppins',sans-serif;white-space:nowrap;">Avocat</button><button type="button" class="chip" data-group="ing" data-value="oeufs" onclick="selectChip(this)"  style="all:unset;cursor:pointer;border:1px solid #EAD3B8;background:transparent;color:#3A2E27;border-radius:20px;padding:6px 13px;font-size:12px;font-family:'Poppins',sans-serif;white-space:nowrap;">Œufs</button><button type="button" class="chip" data-group="ing" data-value="quinoa" onclick="selectChip(this)"  style="all:unset;cursor:pointer;border:1px solid #EAD3B8;background:transparent;color:#3A2E27;border-radius:20px;padding:6px 13px;font-size:12px;font-family:'Poppins',sans-serif;white-space:nowrap;">Quinoa</button></div>
+      <div style="flex-shrink:0;padding:0 20px 10px 20px;position:relative;">
+        <div style="font-size:12px;font-weight:600;color:#8A7264;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:8px;">Catégorie</div>
+        
+    <button type="button" onclick="toggleCategory('')" id="cat-trigger" style="all:unset;box-sizing:border-box;cursor:pointer;width:100%;height:42px;border:1px solid #EAD3B8;border-radius:25px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;color:#8A7264;font-size:13px;font-family:'Poppins',sans-serif;background:#FFFBF6;">
+      <span id="cat-label">Toutes les catégories</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A7264" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+    </button>
+    <div id="cat-panel" style="display:none;position:absolute;left:0;right:0;top:100%;margin-top:4px;background:#FFFBF6;border:1px solid #EAD3B8;border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,0.1);z-index:5;overflow:hidden;"><button type="button" onclick="pickCategory('','Toutes les catégories')" style="all:unset;cursor:pointer;display:block;width:100%;padding:10px 14px;font-size:13px;color:#3A2E27;font-family:'Poppins',sans-serif;">Toutes les catégories</button><button type="button" onclick="pickCategory('','Petit-déjeuner')" style="all:unset;cursor:pointer;display:block;width:100%;padding:10px 14px;font-size:13px;color:#3A2E27;font-family:'Poppins',sans-serif;">Petit-déjeuner</button><button type="button" onclick="pickCategory('','Plat principal')" style="all:unset;cursor:pointer;display:block;width:100%;padding:10px 14px;font-size:13px;color:#3A2E27;font-family:'Poppins',sans-serif;">Plat principal</button><button type="button" onclick="pickCategory('','Soupe')" style="all:unset;cursor:pointer;display:block;width:100%;padding:10px 14px;font-size:13px;color:#3A2E27;font-family:'Poppins',sans-serif;">Soupe</button><button type="button" onclick="pickCategory('','Dessert')" style="all:unset;cursor:pointer;display:block;width:100%;padding:10px 14px;font-size:13px;color:#3A2E27;font-family:'Poppins',sans-serif;">Dessert</button></div>
+      </div>
+      <div style="flex-shrink:0;padding:10px 20px 10px 20px;font-size:12px;font-weight:600;color:#8A7264;text-transform:uppercase;letter-spacing:0.6px;">Durée de préparation (max)</div>
+      <div style="flex-shrink:0;padding:0 20px 16px 20px;display:flex;flex-wrap:wrap;gap:8px;"><button type="button" class="chip" data-group="dur" data-value="10" onclick="selectChip(this)"  style="all:unset;cursor:pointer;border:1px solid #EAD3B8;background:transparent;color:#3A2E27;border-radius:20px;padding:6px 13px;font-size:12px;font-family:'Poppins',sans-serif;white-space:nowrap;">10 min</button><button type="button" class="chip" data-group="dur" data-value="15" onclick="selectChip(this)"  style="all:unset;cursor:pointer;border:1px solid #93A876;background:#E4E7C9;color:#3A2E27;border-radius:20px;padding:6px 13px;font-size:12px;font-family:'Poppins',sans-serif;white-space:nowrap;">15 min</button><button type="button" class="chip" data-group="dur" data-value="30" onclick="selectChip(this)"  style="all:unset;cursor:pointer;border:1px solid #EAD3B8;background:transparent;color:#3A2E27;border-radius:20px;padding:6px 13px;font-size:12px;font-family:'Poppins',sans-serif;white-space:nowrap;">30 min</button><button type="button" class="chip" data-group="dur" data-value="45" onclick="selectChip(this)"  style="all:unset;cursor:pointer;border:1px solid #EAD3B8;background:transparent;color:#3A2E27;border-radius:20px;padding:6px 13px;font-size:12px;font-family:'Poppins',sans-serif;white-space:nowrap;">45 min</button></div>
+      <div style="flex-shrink:0;padding:0 20px 10px 20px;">
+        <button type="button" onclick="applyFilter('')" style="all:unset;box-sizing:border-box;cursor:pointer;width:100%;height:48px;border-radius:25px;
+          background:#C97B5F;color:#FFFBF6;display:flex;align-items:center;justify-content:center;
+          font-family:'Poppins',sans-serif;font-size:14px;font-weight:700;">Filtrer</button>
+      </div>
+      <div style="flex-shrink:0;height:1px;background:#F2E2CC;margin:0 20px;"></div>
+      <div style="flex-shrink:0;padding:14px 20px 8px 20px;font-size:13px;color:#8A7264;" id="count">4 recettes trouvées avec « courgette »</div>
+      <div style="flex-grow:1;overflow:auto;padding:2px 20px 20px 20px;display:flex;flex-direction:column;gap:12px;" id="list"><button type="button" class="recipe-row" data-tags="quinoa" data-minutes="15" data-name="bowl de quinoa croquant"
+      onclick="go('detail')" aria-label="Voir la recette Bowl de quinoa croquant" style="all:unset;box-sizing:border-box;cursor:pointer;
+      display:flex;gap:14px;align-items:center;padding:12px;background:#FFFBF6;border-radius:20px;
+      border:1px solid #F2E2CC;box-shadow:0 2px 10px rgba(122,74,46,0.06);width:100%;">
+      <div style="width:60px;height:60px;flex-shrink:0;border-radius:14px;background:#E4E7C9;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+        <svg viewBox="0 0 120 120" width="56" height="56" role="img" aria-label="Illustration du plat">
+      <ellipse cx="60" cy="88" rx="44" ry="9" fill="#00000010"/>
+      <circle cx="60" cy="62" r="42" fill="#FFFCF7"/>
+      <circle cx="60" cy="62" r="42" fill="none" stroke="#F2E2CC" stroke-width="2"/>
+      <ellipse cx="43" cy="48" rx="17" ry="13" fill="#8FAE6E"/>
+      <ellipse cx="81" cy="54" rx="13" ry="10" fill="#E7A98F"/>
+      <ellipse cx="54" cy="81" rx="11" ry="8" fill="#F0C9A0"/>
+      <path d="M38 40c4-10 10-16 14-18" stroke="#6B8F5C" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg>
+      </div>
+      <div style="flex-grow:1;display:flex;flex-direction:column;gap:5px;min-width:0;text-align:left;">
+        <div style="font-family:'Caladea',serif;font-weight:700;font-size:15px;color:#3A2E27;">Bowl de quinoa croquant</div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:#8A7264;font-family:'Poppins',sans-serif;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A7264" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 15 min · Facile
+        </div>
+      </div>
+      <div style="flex-shrink:0;font-size:10px;font-weight:700;background:#E7A98F;color:#FFFBF6;border-radius:12px;padding:3px 9px;font-family:'Poppins',sans-serif;">sain</div>
+    </button><button type="button" class="recipe-row" data-tags="courgette" data-minutes="20" data-name="soupe de courgettes au basilic"
+      onclick="go('detail')" aria-label="Voir la recette Soupe de courgettes au basilic" style="all:unset;box-sizing:border-box;cursor:pointer;
+      display:flex;gap:14px;align-items:center;padding:12px;background:#FFFBF6;border-radius:20px;
+      border:1px solid #F2E2CC;box-shadow:0 2px 10px rgba(122,74,46,0.06);width:100%;">
+      <div style="width:60px;height:60px;flex-shrink:0;border-radius:14px;background:#E4E7C9;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+        <svg viewBox="0 0 120 120" width="56" height="56" role="img" aria-label="Illustration du plat">
+      <ellipse cx="60" cy="88" rx="44" ry="9" fill="#00000010"/>
+      <circle cx="60" cy="62" r="42" fill="#FFFCF7"/>
+      <circle cx="60" cy="62" r="42" fill="none" stroke="#F2E2CC" stroke-width="2"/>
+      <ellipse cx="50" cy="55" rx="17" ry="13" fill="#C97B5F"/>
+      <ellipse cx="74" cy="61" rx="13" ry="10" fill="#E8C468"/>
+      <ellipse cx="61" cy="74" rx="11" ry="8" fill="#8FAE6E"/>
+      <path d="M38 40c4-10 10-16 14-18" stroke="#6B8F5C" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg>
+      </div>
+      <div style="flex-grow:1;display:flex;flex-direction:column;gap:5px;min-width:0;text-align:left;">
+        <div style="font-family:'Caladea',serif;font-weight:700;font-size:15px;color:#3A2E27;">Soupe de courgettes au basilic</div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:#8A7264;font-family:'Poppins',sans-serif;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A7264" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 20 min · Facile
+        </div>
+      </div>
+      <div style="flex-shrink:0;font-size:10px;font-weight:700;background:#E7A98F;color:#FFFBF6;border-radius:12px;padding:3px 9px;font-family:'Poppins',sans-serif;">sain</div>
+    </button><button type="button" class="recipe-row" data-tags="avocat,poulet" data-minutes="10" data-name="wrap avocat et poulet grillé"
+      onclick="go('detail')" aria-label="Voir la recette Wrap avocat et poulet grillé" style="all:unset;box-sizing:border-box;cursor:pointer;
+      display:flex;gap:14px;align-items:center;padding:12px;background:#FFFBF6;border-radius:20px;
+      border:1px solid #F2E2CC;box-shadow:0 2px 10px rgba(122,74,46,0.06);width:100%;">
+      <div style="width:60px;height:60px;flex-shrink:0;border-radius:14px;background:#E4E7C9;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+        <svg viewBox="0 0 120 120" width="56" height="56" role="img" aria-label="Illustration du plat">
+      <ellipse cx="60" cy="88" rx="44" ry="9" fill="#00000010"/>
+      <circle cx="60" cy="62" r="42" fill="#FFFCF7"/>
+      <circle cx="60" cy="62" r="42" fill="none" stroke="#F2E2CC" stroke-width="2"/>
+      <ellipse cx="47" cy="54" rx="17" ry="13" fill="#D97D66"/>
+      <ellipse cx="77" cy="60" rx="13" ry="10" fill="#F0C9A0"/>
+      <ellipse cx="60" cy="77" rx="11" ry="8" fill="#93A876"/>
+      <path d="M38 40c4-10 10-16 14-18" stroke="#6B8F5C" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg>
+      </div>
+      <div style="flex-grow:1;display:flex;flex-direction:column;gap:5px;min-width:0;text-align:left;">
+        <div style="font-family:'Caladea',serif;font-weight:700;font-size:15px;color:#3A2E27;">Wrap avocat et poulet grillé</div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:#8A7264;font-family:'Poppins',sans-serif;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A7264" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 10 min · Facile
+        </div>
+      </div>
+      <div style="flex-shrink:0;font-size:10px;font-weight:700;background:#E7A98F;color:#FFFBF6;border-radius:12px;padding:3px 9px;font-family:'Poppins',sans-serif;">sain</div>
+    </button><button type="button" class="recipe-row" data-tags="" data-minutes="30" data-name="curry de lentilles corail"
+      onclick="go('detail')" aria-label="Voir la recette Curry de lentilles corail" style="all:unset;box-sizing:border-box;cursor:pointer;
+      display:flex;gap:14px;align-items:center;padding:12px;background:#FFFBF6;border-radius:20px;
+      border:1px solid #F2E2CC;box-shadow:0 2px 10px rgba(122,74,46,0.06);width:100%;">
+      <div style="width:60px;height:60px;flex-shrink:0;border-radius:14px;background:#E4E7C9;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+        <svg viewBox="0 0 120 120" width="56" height="56" role="img" aria-label="Illustration du plat">
+      <ellipse cx="60" cy="88" rx="44" ry="9" fill="#00000010"/>
+      <circle cx="60" cy="62" r="42" fill="#FFFCF7"/>
+      <circle cx="60" cy="62" r="42" fill="none" stroke="#F2E2CC" stroke-width="2"/>
+      <ellipse cx="44" cy="53" rx="17" ry="13" fill="#E8C468"/>
+      <ellipse cx="80" cy="59" rx="13" ry="10" fill="#C97B5F"/>
+      <ellipse cx="59" cy="80" rx="11" ry="8" fill="#8FAE6E"/>
+      <path d="M38 40c4-10 10-16 14-18" stroke="#6B8F5C" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg>
+      </div>
+      <div style="flex-grow:1;display:flex;flex-direction:column;gap:5px;min-width:0;text-align:left;">
+        <div style="font-family:'Caladea',serif;font-weight:700;font-size:15px;color:#3A2E27;">Curry de lentilles corail</div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:#8A7264;font-family:'Poppins',sans-serif;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A7264" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 30 min · Moyen
+        </div>
+      </div>
+      <div style="flex-shrink:0;font-size:10px;font-weight:700;background:#E7A98F;color:#FFFBF6;border-radius:12px;padding:3px 9px;font-family:'Poppins',sans-serif;">sain</div>
+    </button><button type="button" class="recipe-row" data-tags="riz" data-minutes="18" data-name="salade de riz complet aux herbes"
+      onclick="go('detail')" aria-label="Voir la recette Salade de riz complet aux herbes" style="all:unset;box-sizing:border-box;cursor:pointer;
+      display:flex;gap:14px;align-items:center;padding:12px;background:#FFFBF6;border-radius:20px;
+      border:1px solid #F2E2CC;box-shadow:0 2px 10px rgba(122,74,46,0.06);width:100%;">
+      <div style="width:60px;height:60px;flex-shrink:0;border-radius:14px;background:#E4E7C9;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+        <svg viewBox="0 0 120 120" width="56" height="56" role="img" aria-label="Illustration du plat">
+      <ellipse cx="60" cy="88" rx="44" ry="9" fill="#00000010"/>
+      <circle cx="60" cy="62" r="42" fill="#FFFCF7"/>
+      <circle cx="60" cy="62" r="42" fill="none" stroke="#F2E2CC" stroke-width="2"/>
+      <ellipse cx="51" cy="52" rx="17" ry="13" fill="#93A876"/>
+      <ellipse cx="73" cy="58" rx="13" ry="10" fill="#F0C9A0"/>
+      <ellipse cx="58" cy="73" rx="11" ry="8" fill="#D97D66"/>
+      <path d="M38 40c4-10 10-16 14-18" stroke="#6B8F5C" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg>
+      </div>
+      <div style="flex-grow:1;display:flex;flex-direction:column;gap:5px;min-width:0;text-align:left;">
+        <div style="font-family:'Caladea',serif;font-weight:700;font-size:15px;color:#3A2E27;">Salade de riz complet aux herbes</div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:#8A7264;font-family:'Poppins',sans-serif;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A7264" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 18 min · Facile
+        </div>
+      </div>
+      <div style="flex-shrink:0;font-size:10px;font-weight:700;background:#E7A98F;color:#FFFBF6;border-radius:12px;padding:3px 9px;font-family:'Poppins',sans-serif;">sain</div>
+    </button><button type="button" class="recipe-row" data-tags="courgette" data-minutes="22" data-name="galettes de courgette légères"
+      onclick="go('detail')" aria-label="Voir la recette Galettes de courgette légères" style="all:unset;box-sizing:border-box;cursor:pointer;
+      display:flex;gap:14px;align-items:center;padding:12px;background:#FFFBF6;border-radius:20px;
+      border:1px solid #F2E2CC;box-shadow:0 2px 10px rgba(122,74,46,0.06);width:100%;">
+      <div style="width:60px;height:60px;flex-shrink:0;border-radius:14px;background:#E4E7C9;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+        <svg viewBox="0 0 120 120" width="56" height="56" role="img" aria-label="Illustration du plat">
+      <ellipse cx="60" cy="88" rx="44" ry="9" fill="#00000010"/>
+      <circle cx="60" cy="62" r="42" fill="#FFFCF7"/>
+      <circle cx="60" cy="62" r="42" fill="none" stroke="#F2E2CC" stroke-width="2"/>
+      <ellipse cx="48" cy="51" rx="17" ry="13" fill="#C97B5F"/>
+      <ellipse cx="76" cy="57" rx="13" ry="10" fill="#E8C468"/>
+      <ellipse cx="57" cy="76" rx="11" ry="8" fill="#8FAE6E"/>
+      <path d="M38 40c4-10 10-16 14-18" stroke="#6B8F5C" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg>
+      </div>
+      <div style="flex-grow:1;display:flex;flex-direction:column;gap:5px;min-width:0;text-align:left;">
+        <div style="font-family:'Caladea',serif;font-weight:700;font-size:15px;color:#3A2E27;">Galettes de courgette légères</div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:#8A7264;font-family:'Poppins',sans-serif;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A7264" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 22 min · Moyen
+        </div>
+      </div>
+      <div style="flex-shrink:0;font-size:10px;font-weight:700;background:#E7A98F;color:#FFFBF6;border-radius:12px;padding:3px 9px;font-family:'Poppins',sans-serif;">sain</div>
+    </button><button type="button" class="recipe-row" data-tags="" data-minutes="25" data-name="bowl de patate douce rôtie"
+      onclick="go('detail')" aria-label="Voir la recette Bowl de patate douce rôtie" style="all:unset;box-sizing:border-box;cursor:pointer;
+      display:flex;gap:14px;align-items:center;padding:12px;background:#FFFBF6;border-radius:20px;
+      border:1px solid #F2E2CC;box-shadow:0 2px 10px rgba(122,74,46,0.06);width:100%;">
+      <div style="width:60px;height:60px;flex-shrink:0;border-radius:14px;background:#E4E7C9;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+        <svg viewBox="0 0 120 120" width="56" height="56" role="img" aria-label="Illustration du plat">
+      <ellipse cx="60" cy="88" rx="44" ry="9" fill="#00000010"/>
+      <circle cx="60" cy="62" r="42" fill="#FFFCF7"/>
+      <circle cx="60" cy="62" r="42" fill="none" stroke="#F2E2CC" stroke-width="2"/>
+      <ellipse cx="45" cy="50" rx="17" ry="13" fill="#F0C9A0"/>
+      <ellipse cx="79" cy="56" rx="13" ry="10" fill="#C97B5F"/>
+      <ellipse cx="56" cy="79" rx="11" ry="8" fill="#8FAE6E"/>
+      <path d="M38 40c4-10 10-16 14-18" stroke="#6B8F5C" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg>
+      </div>
+      <div style="flex-grow:1;display:flex;flex-direction:column;gap:5px;min-width:0;text-align:left;">
+        <div style="font-family:'Caladea',serif;font-weight:700;font-size:15px;color:#3A2E27;">Bowl de patate douce rôtie</div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:#8A7264;font-family:'Poppins',sans-serif;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A7264" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 25 min · Facile
+        </div>
+      </div>
+      <div style="flex-shrink:0;font-size:10px;font-weight:700;background:#E7A98F;color:#FFFBF6;border-radius:12px;padding:3px 9px;font-family:'Poppins',sans-serif;">sain</div>
+    </button><button type="button" class="recipe-row" data-tags="courgette" data-minutes="16" data-name="poêlée de légumes de saison"
+      onclick="go('detail')" aria-label="Voir la recette Poêlée de légumes de saison" style="all:unset;box-sizing:border-box;cursor:pointer;
+      display:flex;gap:14px;align-items:center;padding:12px;background:#FFFBF6;border-radius:20px;
+      border:1px solid #F2E2CC;box-shadow:0 2px 10px rgba(122,74,46,0.06);width:100%;">
+      <div style="width:60px;height:60px;flex-shrink:0;border-radius:14px;background:#E4E7C9;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+        <svg viewBox="0 0 120 120" width="56" height="56" role="img" aria-label="Illustration du plat">
+      <ellipse cx="60" cy="88" rx="44" ry="9" fill="#00000010"/>
+      <circle cx="60" cy="62" r="42" fill="#FFFCF7"/>
+      <circle cx="60" cy="62" r="42" fill="none" stroke="#F2E2CC" stroke-width="2"/>
+      <ellipse cx="52" cy="49" rx="17" ry="13" fill="#8FAE6E"/>
+      <ellipse cx="72" cy="55" rx="13" ry="10" fill="#E7A98F"/>
+      <ellipse cx="55" cy="72" rx="11" ry="8" fill="#F0C9A0"/>
+      <path d="M38 40c4-10 10-16 14-18" stroke="#6B8F5C" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg>
+      </div>
+      <div style="flex-grow:1;display:flex;flex-direction:column;gap:5px;min-width:0;text-align:left;">
+        <div style="font-family:'Caladea',serif;font-weight:700;font-size:15px;color:#3A2E27;">Poêlée de légumes de saison</div>
+        <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:#8A7264;font-family:'Poppins',sans-serif;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A7264" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 16 min · Facile
+        </div>
+      </div>
+      <div style="flex-shrink:0;font-size:10px;font-weight:700;background:#E7A98F;color:#FFFBF6;border-radius:12px;padding:3px 9px;font-family:'Poppins',sans-serif;">sain</div>
+    </button><div class="empty-state" id="empty" style="display:none;flex-direction:column;align-items:center;gap:10px;padding:28px 10px;text-align:center;grid-column:1/-1;">
+      <div style="width:56px;height:56px;border-radius:50%;background:#F6DFC4;display:flex;align-items:center;justify-content:center;color:#B0613F;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#B0613F" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7"/><path d="m21 21-4.35-4.35"/><path d="M7.5 10h5"/></svg></div>
+      <div style="font-size:13px;color:#8A7264;">Aucune recette ne correspond à ce filtre.</div>
+    </div></div>
+    </div></div><div class="screen" id="detail" style="display:none;">
+    <div style="width:390px;height:844px;box-sizing:border-box;background:#FBF1E6;display:flex;flex-direction:column;overflow:hidden;font-family:'Poppins',sans-serif;">
+      <div style="flex-shrink:0;padding:22px 20px 16px 20px;display:flex;align-items:center;justify-content:space-between;"><button type="button" onclick="go('accueil')" style="all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:10px;">
+      <span style="width:32px;height:32px;border-radius:9px;border:1px solid #EAD3B8;display:flex;align-items:center;justify-content:center;color:#3A2E27;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3A2E27" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg></span>
+      <span style="font-size:13px;color:#8A7264;font-family:'Poppins',sans-serif;">Retour</span>
+    </button></div>
+      <div style="flex-grow:1;overflow:auto;padding:0 20px 20px 20px;display:flex;flex-direction:column;gap:16px;">
+        <div style="width:100%;height:190px;border-radius:20px;background:#E4E7C9;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 120 120" width="150" height="150" role="img" aria-label="Illustration du plat">
+      <ellipse cx="60" cy="88" rx="44" ry="9" fill="#00000010"/>
+      <circle cx="60" cy="62" r="42" fill="#FFFCF7"/>
+      <circle cx="60" cy="62" r="42" fill="none" stroke="#F2E2CC" stroke-width="2"/>
+      <ellipse cx="50" cy="55" rx="17" ry="13" fill="#C97B5F"/>
+      <ellipse cx="74" cy="61" rx="13" ry="10" fill="#E8C468"/>
+      <ellipse cx="61" cy="74" rx="11" ry="8" fill="#8FAE6E"/>
+      <path d="M38 40c4-10 10-16 14-18" stroke="#6B8F5C" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg></div>
+        <div style="font-family:'Caladea',serif;font-weight:700;font-size:22px;color:#3A2E27;line-height:1.25;">Soupe de courgettes au basilic</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <div style="border:1px solid #EAD3B8;border-radius:20px;padding:5px 12px;font-size:12px;color:#8A7264;display:flex;align-items:center;gap:5px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A7264" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 20 min</div>
+      <div style="border:1px solid #EAD3B8;border-radius:20px;padding:5px 12px;font-size:12px;color:#8A7264;">Difficulté : Facile</div>
+      <div style="flex-shrink:0;font-size:11px;font-weight:700;background:#E7A98F;color:#FFFBF6;border-radius:12px;padding:4px 10px;font-family:'Poppins',sans-serif;">sain</div>
+    </div>
+        <div style="height:1px;background:#F2E2CC;"></div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div style="font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:#3A2E27;font-family:'Poppins',sans-serif;margin-bottom:4px;">Ingrédients <span style="font-weight:400;text-transform:none;color:#8A7264;font-size:12px;">(coche ce que tu as déjà)</span></div>
+          <div><div style="margin-bottom:6px;"><button type="button" class="ing-check" onclick="toggleIngredient(this)" data-checked="true" style="all:unset;cursor:pointer;
+      display:flex;align-items:center;gap:10px;width:100%;padding:3px 0;">
+      <span class="box" style="width:18px;height:18px;border-radius:5px;border:1.5px solid #93A876;background:#93A876;
+        display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+      <span class="lbl" style="font-size:14px;color:#3A2E27;font-family:'Poppins',sans-serif;">500 g de courgettes</span>
+    </button></div><div style="margin-bottom:6px;"><button type="button" class="ing-check" onclick="toggleIngredient(this)" data-checked="true" style="all:unset;cursor:pointer;
+      display:flex;align-items:center;gap:10px;width:100%;padding:3px 0;">
+      <span class="box" style="width:18px;height:18px;border-radius:5px;border:1.5px solid #93A876;background:#93A876;
+        display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+      <span class="lbl" style="font-size:14px;color:#3A2E27;font-family:'Poppins',sans-serif;">1 oignon</span>
+    </button></div><div style="margin-bottom:6px;"><button type="button" class="ing-check" onclick="toggleIngredient(this)" data-checked="true" style="all:unset;cursor:pointer;
+      display:flex;align-items:center;gap:10px;width:100%;padding:3px 0;">
+      <span class="box" style="width:18px;height:18px;border-radius:5px;border:1.5px solid #93A876;background:#93A876;
+        display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+      <span class="lbl" style="font-size:14px;color:#3A2E27;font-family:'Poppins',sans-serif;">1 litre de bouillon de légumes</span>
+    </button></div><div style="margin-bottom:6px;"><button type="button" class="ing-check" onclick="toggleIngredient(this)" data-checked="true" style="all:unset;cursor:pointer;
+      display:flex;align-items:center;gap:10px;width:100%;padding:3px 0;">
+      <span class="box" style="width:18px;height:18px;border-radius:5px;border:1.5px solid #93A876;background:#93A876;
+        display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+      <span class="lbl" style="font-size:14px;color:#3A2E27;font-family:'Poppins',sans-serif;">Épices au choix</span>
+    </button></div></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:#3A2E27;font-family:'Poppins',sans-serif;">Étapes</div>
+          <div><div style="margin-bottom:13px;"><div style="display:flex;gap:12px;">
+      <div style="width:24px;height:24px;flex-shrink:0;border-radius:50%;background:#93A876;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;font-family:'Poppins',sans-serif;">1</div>
+      <div style="font-size:14px;line-height:1.5;color:#3A2E27;font-family:'Poppins',sans-serif;">Éplucher et couper les courgettes et l'oignon</div>
+    </div></div><div style="margin-bottom:13px;"><div style="display:flex;gap:12px;">
+      <div style="width:24px;height:24px;flex-shrink:0;border-radius:50%;background:#93A876;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;font-family:'Poppins',sans-serif;">2</div>
+      <div style="font-size:14px;line-height:1.5;color:#3A2E27;font-family:'Poppins',sans-serif;">Faire revenir l'oignon quelques minutes</div>
+    </div></div><div style="margin-bottom:13px;"><div style="display:flex;gap:12px;">
+      <div style="width:24px;height:24px;flex-shrink:0;border-radius:50%;background:#93A876;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;font-family:'Poppins',sans-serif;">3</div>
+      <div style="font-size:14px;line-height:1.5;color:#3A2E27;font-family:'Poppins',sans-serif;">Ajouter les courgettes et le bouillon, laisser mijoter 15 min</div>
+    </div></div><div style="margin-bottom:13px;"><div style="display:flex;gap:12px;">
+      <div style="width:24px;height:24px;flex-shrink:0;border-radius:50%;background:#93A876;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;font-family:'Poppins',sans-serif;">4</div>
+      <div style="font-size:14px;line-height:1.5;color:#3A2E27;font-family:'Poppins',sans-serif;">Mixer et assaisonner selon le goût</div>
+    </div></div></div>
+        </div>
+      </div>
+    </div></div><div class="screen" id="aucun" style="display:none;">
+    <div style="width:390px;height:844px;box-sizing:border-box;background:#FBF1E6;display:flex;flex-direction:column;overflow:hidden;font-family:'Poppins',sans-serif;">
+      <div style="flex-shrink:0;padding:22px 20px 16px 20px;display:flex;align-items:center;justify-content:space-between;"><button type="button" onclick="go('recherche')" style="all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:10px;">
+      <span style="width:32px;height:32px;border-radius:9px;border:1px solid #EAD3B8;display:flex;align-items:center;justify-content:center;color:#3A2E27;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3A2E27" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg></span>
+      <span style="font-size:13px;color:#8A7264;font-family:'Poppins',sans-serif;">Recherche</span>
+    </button></div>
+      <div style="flex-grow:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;">
+        <div style="width:100px;height:100px;border-radius:50%;background:#F6DFC4;display:flex;align-items:center;justify-content:center;color:#B0613F;"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#B0613F" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7"/><path d="m21 21-4.35-4.35"/><path d="M7.5 10h5"/></svg></div>
+        <div style="font-family:'Caladea',serif;font-weight:700;font-size:21px;color:#3A2E27;">Aucune recette trouvée</div>
+        <div style="font-size:14px;color:#8A7264;text-align:center;line-height:1.5;max-width:420px;">Essaie une autre recherche ou explore toutes les recettes disponibles.</div>
+        <button type="button" onclick="go('accueil')" style="all:unset;box-sizing:border-box;cursor:pointer;margin-top:8px;border-radius:25px;
+          padding:13px 26px;background:#C97B5F;color:#FFFBF6;font-family:'Poppins',sans-serif;font-size:14px;font-weight:700;">Voir toutes les recettes</button></div>
+    </div></div></div>
+    </div>
+    <div class="device-group" id="group-desktop" style="display:none;">
+      <div class="device-frame desktop"><div class="screen" id="d-accueil" style="display:flex;">
+    <div style="width:1440px;height:900px;box-sizing:border-box;background:#FBF1E6;display:flex;flex-direction:column;overflow:hidden;font-family:'Poppins',sans-serif;">
+      <div style="flex-shrink:0;height:78px;padding:0 44px;display:flex;align-items:center;gap:24px;border-bottom:1px solid #F2E2CC;"><div style="font-family:'Caladea',serif;font-weight:700;font-size:24px;color:#8A5A3E;letter-spacing:-0.3px;">Greenplate</div><button type="button" onclick="go('d-recherche')" aria-label="Rechercher un ingrédient" style="all:unset;box-sizing:border-box;cursor:pointer;
+          width:420px;height:44px;border:1px solid #EAD3B8;border-radius:25px;display:flex;align-items:center;
+          padding:0 14px;gap:8px;color:#8A7264;font-family:'Poppins',sans-serif;font-size:14px;background:#FFFBF6;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8A7264" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><span>Rechercher un ingrédient…</span></button><div style="flex-grow:1;"></div></div>
+      <div style="flex-grow:1;overflow:auto;padding:36px 48px 48px 48px;display:flex;flex-direction:column;gap:26px;">
+        <div style="font-family:'Caladea',serif;font-weight:700;font-size:26px;color:#3A2E27;">Quelles envies aujourd'hui ?</div>
+        <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;"><button type="button" class="recipe-row" data-tags="quinoa" data-minutes="15" data-name="bowl de quinoa croquant"
+      onclick="go('d-detail')" aria-label="Voir la recette Bowl de quinoa croquant" style="all:unset;box-sizing:border-box;cursor:pointer;
+      display:flex;flex-direction:column;background:#FFFBF6;border-radius:20px;border:1px solid #F2E2CC;
+      box-shadow:0 2px 10px rgba(122,74,46,0.06);overflow:hidden;">
+      <div style="height:128px;background:#E4E7C9;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 120 120" width="84" height="84" role="img" aria-label="Illustration du plat">
+      <ellipse cx="60" cy="88" rx="44" ry="9" fill="#00000010"/>
+      <circle cx="60" cy="62" r="42" fill="#FFFCF7"/>
+      <circle cx="60" cy="62" r="42" fill="none" stroke="#F2E2CC" stroke-width="2"/>
+      <ellipse cx="43" cy="48" rx="17" ry="13" fill="#8FAE6E"/>
+      <ellipse cx="81" cy="54" rx="13" ry="10" fill="#E7A98F"/>
+      <ellipse cx="54" cy="81" rx="11" ry="8" fill="#F0C9A0"/>
+      <path d="M38 40c4-10 10-16 14-18" stroke="#6B8F5C" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg></div>
+      <div style="height:1px;background:#F2E2CC;"></div>
+      <div style="padding:14px 16px;display:flex;flex-direction:column;gap:6px;">
+        <div style="font-family:'Caladea',serif;font-weight:700;font-size:15px;color:#3A2E27;">Bowl de quinoa croquant</div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:#8A7264;font-family:'Poppins',sans-serif;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A7264" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 15 min · Facile</div>
+          <div style="flex-shrink:0;font-size:10px;font-weight:700;background:#E7A98F;color:#FFFBF6;border-radius:12px;padding:3px 9px;font-family:'Poppins',sans-serif;">sain</div>
+        </div>
+      </div>
+    </button><button type="button" class="recipe-row" data-tags="courgette" data-minutes="20" data-name="soupe de courgettes au basilic"
+      onclick="go('d-detail')" aria-label="Voir la recette Soupe de courgettes au basilic" style="all:unset;box-sizing:border-box;cursor:pointer;
+      display:flex;flex-direction:column;background:#FFFBF6;border-radius:20px;border:1px solid #F2E2CC;
+      box-shadow:0 2px 10px rgba(122,74,46,0.06);overflow:hidden;">
+      <div style="height:128px;background:#E4E7C9;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 120 120" width="84" height="84" role="img" aria-label="Illustration du plat">
+      <ellipse cx="60" cy="88" rx="44" ry="9" fill="#00000010"/>
+      <circle cx="60" cy="62" r="42" fill="#FFFCF7"/>
+      <circle cx="60" cy="62" r="42" fill="none" stroke="#F2E2CC" stroke-width="2"/>
+      <ellipse cx="50" cy="55" rx="17" ry="13" fill="#C97B5F"/>
+      <ellipse cx="74" cy="61" rx="13" ry="10" fill="#E8C468"/>
+      <ellipse cx="61" cy="74" rx="11" ry="8" fill="#8FAE6E"/>
+      <path d="M38 40c4-10 10-16 14-18" stroke="#6B8F5C" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg></div>
+      <div style="height:1px;background:#F2E2CC;"></div>
+      <div style="padding:14px 16px;display:flex;flex-direction:column;gap:6px;">
+        <div style="font-family:'Caladea',serif;font-weight:700;font-size:15px;color:#3A2E27;">Soupe de courgettes au basilic</div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:#8A7264;font-family:'Poppins',sans-serif;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A7264" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 20 min · Facile</div>
+          <div style="flex-shrink:0;font-size:10px;font-weight:700;background:#E7A98F;color:#FFFBF6;border-radius:12px;padding:3px 9px;font-family:'Poppins',sans-serif;">sain</div>
+        </div>
+      </div>
+    </button><button type="button" class="recipe-row" data-tags="avocat,poulet" data-minutes="10" data-name="wrap avocat et poulet grillé"
+      onclick="go('d-detail')" aria-label="Voir la recette Wrap avocat et poulet grillé" style="all:unset;box-sizing:border-box;cursor:pointer;
+      display:flex;flex-direction:column;background:#FFFBF6;border-radius:20px;border:1px solid #F2E2CC;
+      box-shadow:0 2px 10px rgba(122,74,46,0.06);overflow:hidden;">
+      <div style="height:128px;background:#E4E7C9;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 120 120" width="84" height="84" role="img" aria-label="Illustration du plat">
+      <ellipse cx="60" cy="88" rx="44" ry="9" fill="#00000010"/>
+      <circle cx="60" cy="62" r="42" fill="#FFFCF7"/>
+      <circle cx="60" cy="62" r="42" fill="none" stroke="#F2E2CC" stroke-width="2"/>
+      <ellipse cx="47" cy="54" rx="17" ry="13" fill="#D97D66"/>
+      <ellipse cx="77" cy="60" rx="13" ry="10" fill="#F0C9A0"/>
+      <ellipse cx="60" cy="77" rx="11" ry="8" fill="#93A876"/>
+      <path d="M38 40c4-10 10-16 14-18" stroke="#6B8F5C" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg></div>
+      <div style="height:1px;background:#F2E2CC;"></div>
+      <div style="padding:14px 16px;display:flex;flex-direction:column;gap:6px;">
+        <div style="font-family:'Caladea',serif;font-weight:700;font-size:15px;color:#3A2E27;">Wrap avocat et poulet grillé</div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:#8A7264;font-family:'Poppins',sans-serif;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A7264" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 10 min · Facile</div>
+          <div style="flex-shrink:0;font-size:10px;font-weight:700;background:#E7A98F;color:#FFFBF6;border-radius:12px;padding:3px 9px;font-family:'Poppins',sans-serif;">sain</div>
+        </div>
+      </div>
+    </button><button type="button" class="recipe-row" data-tags="" data-minutes="30" data-name="curry de lentilles corail"
+      onclick="go('d-detail')" aria-label="Voir la recette Curry de lentilles corail" style="all:unset;box-sizing:border-box;cursor:pointer;
+      display:flex;flex-direction:column;background:#FFFBF6;border-radius:20px;border:1px solid #F2E2CC;
+      box-shadow:0 2px 10px rgba(122,74,46,0.06);overflow:hidden;">
+      <div style="height:128px;background:#E4E7C9;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 120 120" width="84" height="84" role="img" aria-label="Illustration du plat">
+      <ellipse cx="60" cy="88" rx="44" ry="9" fill="#00000010"/>
+      <circle cx="60" cy="62" r="42" fill="#FFFCF7"/>
+      <circle cx="60" cy="62" r="42" fill="none" stroke="#F2E2CC" stroke-width="2"/>
+      <ellipse cx="44" cy="53" rx="17" ry="13" fill="#E8C468"/>
+      <ellipse cx="80" cy="59" rx="13" ry="10" fill="#C97B5F"/>
+      <ellipse cx="59" cy="80" rx="11" ry="8" fill="#8FAE6E"/>
+      <path d="M38 40c4-10 10-16 14-18" stroke="#6B8F5C" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg></div>
+      <div style="height:1px;background:#F2E2CC;"></div>
+      <div style="padding:14px 16px;display:flex;flex-direction:column;gap:6px;">
+        <div style="font-family:'Caladea',serif;font-weight:700;font-size:15px;color:#3A2E27;">Curry de lentilles corail</div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:#8A7264;font-family:'Poppins',sans-serif;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A7264" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 30 min · Moyen</div>
+          <div style="flex-shrink:0;font-size:10px;font-weight:700;background:#E7A98F;color:#FFFBF6;border-radius:12px;padding:3px 9px;font-family:'Poppins',sans-serif;">sain</div>
+        </div>
+      </div>
+    </button><button type="button" class="recipe-row" data-tags="riz" data-minutes="18" data-name="salade de riz complet aux herbes"
+      onclick="go('d-detail')" aria-label="Voir la recette Salade de riz complet aux herbes" style="all:unset;box-sizing:border-box;cursor:pointer;
+      display:flex;flex-direction:column;background:#FFFBF6;border-radius:20px;border:1px solid #F2E2CC;
+      box-shadow:0 2px 10px rgba(122,74,46,0.06);overflow:hidden;">
+      <div style="height:128px;background:#E4E7C9;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 120 120" width="84" height="84" role="img" aria-label="Illustration du plat">
+      <ellipse cx="60" cy="88" rx="44" ry="9" fill="#00000010"/>
+      <circle cx="60" cy="62" r="42" fill="#FFFCF7"/>
+      <circle cx="60" cy="62" r="42" fill="none" stroke="#F2E2CC" stroke-width="2"/>
+      <ellipse cx="51" cy="52" rx="17" ry="13" fill="#93A876"/>
+      <ellipse cx="73" cy="58" rx="13" ry="10" fill="#F0C9A0"/>
+      <ellipse cx="58" cy="73" rx="11" ry="8" fill="#D97D66"/>
+      <path d="M38 40c4-10 10-16 14-18" stroke="#6B8F5C" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg></div>
+      <div style="height:1px;background:#F2E2CC;"></div>
+      <div style="padding:14px 16px;display:flex;flex-direction:column;gap:6px;">
+        <div style="font-family:'Caladea',serif;font-weight:700;font-size:15px;color:#3A2E27;">Salade de riz complet aux herbes</div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:#8A7264;font-family:'Poppins',sans-serif;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A7264" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 18 min · Facile</div>
+          <div style="flex-shrink:0;font-size:10px;font-weight:700;background:#E7A98F;color:#FFFBF6;border-radius:12px;padding:3px 9px;font-family:'Poppins',sans-serif;">sain</div>
+        </div>
+      </div>
+    </button><button type="button" class="recipe-row" data-tags="courgette" data-minutes="22" data-name="galettes de courgette légères"
+      onclick="go('d-detail')" aria-label="Voir la recette Galettes de courgette légères" style="all:unset;box-sizing:border-box;cursor:pointer;
+      display:flex;flex-direction:column;background:#FFFBF6;border-radius:20px;border:1px solid #F2E2CC;
+      box-shadow:0 2px 10px rgba(122,74,46,0.06);overflow:hidden;">
+      <div style="height:128px;background:#E4E7C9;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 120 120" width="84" height="84" role="img" aria-label="Illustration du plat">
+      <ellipse cx="60" cy="88" rx="44" ry="9" fill="#00000010"/>
+      <circle cx="60" cy="62" r="42" fill="#FFFCF7"/>
+      <circle cx="60" cy="62" r="42" fill="none" stroke="#F2E2CC" stroke-width="2"/>
+      <ellipse cx="48" cy="51" rx="17" ry="13" fill="#C97B5F"/>
+      <ellipse cx="76" cy="57" rx="13" ry="10" fill="#E8C468"/>
+      <ellipse cx="57" cy="76" rx="11" ry="8" fill="#8FAE6E"/>
+      <path d="M38 40c4-10 10-16 14-18" stroke="#6B8F5C" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg></div>
+      <div style="height:1px;background:#F2E2CC;"></div>
+      <div style="padding:14px 16px;display:flex;flex-direction:column;gap:6px;">
+        <div style="font-family:'Caladea',serif;font-weight:700;font-size:15px;color:#3A2E27;">Galettes de courgette légères</div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:#8A7264;font-family:'Poppins',sans-serif;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A7264" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 22 min · Moyen</div>
+          <div style="flex-shrink:0;font-size:10px;font-weight:700;background:#E7A98F;color:#FFFBF6;border-radius:12px;padding:3px 9px;font-family:'Poppins',sans-serif;">sain</div>
+        </div>
+      </div>
+    </button><button type="button" class="recipe-row" data-tags="" data-minutes="25" data-name="bowl de patate douce rôtie"
+      onclick="go('d-detail')" aria-label="Voir la recette Bowl de patate douce rôtie" style="all:unset;box-sizing:border-box;cursor:pointer;
+      display:flex;flex-direction:column;background:#FFFBF6;border-radius:20px;border:1px solid #F2E2CC;
+      box-shadow:0 2px 10px rgba(122,74,46,0.06);overflow:hidden;">
+      <div style="height:128px;background:#E4E7C9;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 120 120" width="84" height="84" role="img" aria-label="Illustration du plat">
+      <ellipse cx="60" cy="88" rx="44" ry="9" fill="#00000010"/>
+      <circle cx="60" cy="62" r="42" fill="#FFFCF7"/>
+      <circle cx="60" cy="62" r="42" fill="none" stroke="#F2E2CC" stroke-width="2"/>
+      <ellipse cx="45" cy="50" rx="17" ry="13" fill="#F0C9A0"/>
+      <ellipse cx="79" cy="56" rx="13" ry="10" fill="#C97B5F"/>
+      <ellipse cx="56" cy="79" rx="11" ry="8" fill="#8FAE6E"/>
+      <path d="M38 40c4-10 10-16 14-18" stroke="#6B8F5C" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg></div>
+      <div style="height:1px;background:#F2E2CC;"></div>
+      <div style="padding:14px 16px;display:flex;flex-direction:column;gap:6px;">
+        <div style="font-family:'Caladea',serif;font-weight:700;font-size:15px;color:#3A2E27;">Bowl de patate douce rôtie</div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:#8A7264;font-family:'Poppins',sans-serif;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A7264" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 25 min · Facile</div>
+          <div style="flex-shrink:0;font-size:10px;font-weight:700;background:#E7A98F;color:#FFFBF6;border-radius:12px;padding:3px 9px;font-family:'Poppins',sans-serif;">sain</div>
+        </div>
+      </div>
+    </button><button type="button" class="recipe-row" data-tags="courgette" data-minutes="16" data-name="poêlée de légumes de saison"
+      onclick="go('d-detail')" aria-label="Voir la recette Poêlée de légumes de saison" style="all:unset;box-sizing:border-box;cursor:pointer;
+      display:flex;flex-direction:column;background:#FFFBF6;border-radius:20px;border:1px solid #F2E2CC;
+      box-shadow:0 2px 10px rgba(122,74,46,0.06);overflow:hidden;">
+      <div style="height:128px;background:#E4E7C9;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 120 120" width="84" height="84" role="img" aria-label="Illustration du plat">
+      <ellipse cx="60" cy="88" rx="44" ry="9" fill="#00000010"/>
+      <circle cx="60" cy="62" r="42" fill="#FFFCF7"/>
+      <circle cx="60" cy="62" r="42" fill="none" stroke="#F2E2CC" stroke-width="2"/>
+      <ellipse cx="52" cy="49" rx="17" ry="13" fill="#8FAE6E"/>
+      <ellipse cx="72" cy="55" rx="13" ry="10" fill="#E7A98F"/>
+      <ellipse cx="55" cy="72" rx="11" ry="8" fill="#F0C9A0"/>
+      <path d="M38 40c4-10 10-16 14-18" stroke="#6B8F5C" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg></div>
+      <div style="height:1px;background:#F2E2CC;"></div>
+      <div style="padding:14px 16px;display:flex;flex-direction:column;gap:6px;">
+        <div style="font-family:'Caladea',serif;font-weight:700;font-size:15px;color:#3A2E27;">Poêlée de légumes de saison</div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:#8A7264;font-family:'Poppins',sans-serif;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A7264" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 16 min · Facile</div>
+          <div style="flex-shrink:0;font-size:10px;font-weight:700;background:#E7A98F;color:#FFFBF6;border-radius:12px;padding:3px 9px;font-family:'Poppins',sans-serif;">sain</div>
+        </div>
+      </div>
+    </button></div>
+      </div>
+    </div></div><div class="screen" id="d-recherche" style="display:none;">
+    <div style="width:1440px;height:900px;box-sizing:border-box;background:#FBF1E6;display:flex;flex-direction:column;overflow:hidden;font-family:'Poppins',sans-serif;">
+      <div style="flex-shrink:0;height:78px;padding:0 44px;display:flex;align-items:center;gap:24px;border-bottom:1px solid #F2E2CC;"><div style="font-family:'Caladea',serif;font-weight:700;font-size:24px;color:#8A5A3E;letter-spacing:-0.3px;">Greenplate</div><div style="width:420px;"></div><div style="flex-grow:1;"></div></div>
+      <div style="flex-grow:1;display:flex;overflow:hidden;">
+        <div style="width:300px;flex-shrink:0;border-right:1px solid #F2E2CC;padding:30px 26px;display:flex;flex-direction:column;gap:24px;overflow:auto;">
+          <button type="button" onclick="go('d-accueil')" style="all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:10px;">
+      <span style="width:32px;height:32px;border-radius:9px;border:1px solid #EAD3B8;display:flex;align-items:center;justify-content:center;color:#3A2E27;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3A2E27" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg></span>
+      <span style="font-size:13px;color:#8A7264;font-family:'Poppins',sans-serif;">Toutes les recettes</span>
+    </button>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:#3A2E27;">Ingrédient</div>
+            <div style="position:relative;">
+              <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#93A876;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#93A876" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span>
+              <input type="search" id="d-searchbox" oninput="applyFilter('d-')" placeholder="Rechercher un ingrédient…" style="width:100%;box-sizing:border-box;height:44px;border:1px solid #EAD3B8;border-radius:25px;padding:0 14px 0 42px;font-size:14px;font-family:'Poppins',sans-serif;background:#FFFBF6;color:#3A2E27;">
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;"><button type="button" class="chip" data-group="d-ing" data-value="courgette" onclick="selectChip(this)"  style="all:unset;cursor:pointer;border:1px solid #93A876;background:#E4E7C9;color:#3A2E27;border-radius:20px;padding:6px 13px;font-size:12px;font-family:'Poppins',sans-serif;white-space:nowrap;">Courgette</button><button type="button" class="chip" data-group="d-ing" data-value="riz" onclick="selectChip(this)"  style="all:unset;cursor:pointer;border:1px solid #EAD3B8;background:transparent;color:#3A2E27;border-radius:20px;padding:6px 13px;font-size:12px;font-family:'Poppins',sans-serif;white-space:nowrap;">Riz</button><button type="button" class="chip" data-group="d-ing" data-value="poulet" onclick="selectChip(this)"  style="all:unset;cursor:pointer;border:1px solid #EAD3B8;background:transparent;color:#3A2E27;border-radius:20px;padding:6px 13px;font-size:12px;font-family:'Poppins',sans-serif;white-space:nowrap;">Poulet</button><button type="button" class="chip" data-group="d-ing" data-value="avocat" onclick="selectChip(this)"  style="all:unset;cursor:pointer;border:1px solid #EAD3B8;background:transparent;color:#3A2E27;border-radius:20px;padding:6px 13px;font-size:12px;font-family:'Poppins',sans-serif;white-space:nowrap;">Avocat</button><button type="button" class="chip" data-group="d-ing" data-value="oeufs" onclick="selectChip(this)"  style="all:unset;cursor:pointer;border:1px solid #EAD3B8;background:transparent;color:#3A2E27;border-radius:20px;padding:6px 13px;font-size:12px;font-family:'Poppins',sans-serif;white-space:nowrap;">Œufs</button><button type="button" class="chip" data-group="d-ing" data-value="quinoa" onclick="selectChip(this)"  style="all:unset;cursor:pointer;border:1px solid #EAD3B8;background:transparent;color:#3A2E27;border-radius:20px;padding:6px 13px;font-size:12px;font-family:'Poppins',sans-serif;white-space:nowrap;">Quinoa</button></div>
+          </div>
+          <div style="height:1px;background:#F2E2CC;"></div>
+          <div style="display:flex;flex-direction:column;gap:10px;position:relative;">
+            <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:#3A2E27;">Catégorie</div>
+            
+    <button type="button" onclick="toggleCategory('d-')" id="d-cat-trigger" style="all:unset;box-sizing:border-box;cursor:pointer;width:100%;height:42px;border:1px solid #EAD3B8;border-radius:25px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;color:#8A7264;font-size:13px;font-family:'Poppins',sans-serif;background:#FFFBF6;">
+      <span id="d-cat-label">Toutes les catégories</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8A7264" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+    </button>
+    <div id="d-cat-panel" style="display:none;position:absolute;left:0;right:0;top:100%;margin-top:4px;background:#FFFBF6;border:1px solid #EAD3B8;border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,0.1);z-index:5;overflow:hidden;"><button type="button" onclick="pickCategory('d-','Toutes les catégories')" style="all:unset;cursor:pointer;display:block;width:100%;padding:10px 14px;font-size:13px;color:#3A2E27;font-family:'Poppins',sans-serif;">Toutes les catégories</button><button type="button" onclick="pickCategory('d-','Petit-déjeuner')" style="all:unset;cursor:pointer;display:block;width:100%;padding:10px 14px;font-size:13px;color:#3A2E27;font-family:'Poppins',sans-serif;">Petit-déjeuner</button><button type="button" onclick="pickCategory('d-','Plat principal')" style="all:unset;cursor:pointer;display:block;width:100%;padding:10px 14px;font-size:13px;color:#3A2E27;font-family:'Poppins',sans-serif;">Plat principal</button><button type="button" onclick="pickCategory('d-','Soupe')" style="all:unset;cursor:pointer;display:block;width:100%;padding:10px 14px;font-size:13px;color:#3A2E27;font-family:'Poppins',sans-serif;">Soupe</button><button type="button" onclick="pickCategory('d-','Dessert')" style="all:unset;cursor:pointer;display:block;width:100%;padding:10px 14px;font-size:13px;color:#3A2E27;font-family:'Poppins',sans-serif;">Dessert</button></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:#3A2E27;">Durée de préparation (max)</div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;"><button type="button" class="chip" data-group="d-dur" data-value="10" onclick="selectChip(this)"  style="all:unset;cursor:pointer;border:1px solid #EAD3B8;background:transparent;color:#3A2E27;border-radius:20px;padding:6px 13px;font-size:12px;font-family:'Poppins',sans-serif;white-space:nowrap;">10 min</button><button type="button" class="chip" data-group="d-dur" data-value="15" onclick="selectChip(this)"  style="all:unset;cursor:pointer;border:1px solid #93A876;background:#E4E7C9;color:#3A2E27;border-radius:20px;padding:6px 13px;font-size:12px;font-family:'Poppins',sans-serif;white-space:nowrap;">15 min</button><button type="button" class="chip" data-group="d-dur" data-value="30" onclick="selectChip(this)"  style="all:unset;cursor:pointer;border:1px solid #EAD3B8;background:transparent;color:#3A2E27;border-radius:20px;padding:6px 13px;font-size:12px;font-family:'Poppins',sans-serif;white-space:nowrap;">30 min</button><button type="button" class="chip" data-group="d-dur" data-value="45" onclick="selectChip(this)"  style="all:unset;cursor:pointer;border:1px solid #EAD3B8;background:transparent;color:#3A2E27;border-radius:20px;padding:6px 13px;font-size:12px;font-family:'Poppins',sans-serif;white-space:nowrap;">45 min</button></div>
+          </div>
+          <div style="margin-top:auto;display:flex;flex-direction:column;gap:10px;">
+            <button type="button" onclick="applyFilter('d-')" style="all:unset;box-sizing:border-box;cursor:pointer;width:100%;height:46px;border-radius:25px;
+              background:#C97B5F;color:#FFFBF6;display:flex;align-items:center;justify-content:center;
+              font-family:'Poppins',sans-serif;font-size:14px;font-weight:700;">Filtrer</button>
+          </div>
+        </div>
+        <div style="flex-grow:1;overflow:auto;padding:30px 44px 44px 44px;display:flex;flex-direction:column;gap:20px;">
+          <div style="font-size:14px;color:#8A7264;" id="d-count">4 recettes trouvées avec « courgette »</div>
+          <div id="d-list" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;"><button type="button" class="recipe-row" data-tags="quinoa" data-minutes="15" data-name="bowl de quinoa croquant"
+      onclick="go('d-detail')" aria-label="Voir la recette Bowl de quinoa croquant" style="all:unset;box-sizing:border-box;cursor:pointer;
+      display:flex;flex-direction:column;background:#FFFBF6;border-radius:20px;border:1px solid #F2E2CC;
+      box-shadow:0 2px 10px rgba(122,74,46,0.06);overflow:hidden;">
+      <div style="height:128px;background:#E4E7C9;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 120 120" width="84" height="84" role="img" aria-label="Illustration du plat">
+      <ellipse cx="60" cy="88" rx="44" ry="9" fill="#00000010"/>
+      <circle cx="60" cy="62" r="42" fill="#FFFCF7"/>
+      <circle cx="60" cy="62" r="42" fill="none" stroke="#F2E2CC" stroke-width="2"/>
+      <ellipse cx="43" cy="48" rx="17" ry="13" fill="#8FAE6E"/>
+      <ellipse cx="81" cy="54" rx="13" ry="10" fill="#E7A98F"/>
+      <ellipse cx="54" cy="81" rx="11" ry="8" fill="#F0C9A0"/>
+      <path d="M38 40c4-10 10-16 14-18" stroke="#6B8F5C" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg></div>
+      <div style="height:1px;background:#F2E2CC;"></div>
+      <div style="padding:14px 16px;display:flex;flex-direction:column;gap:6px;">
+        <div style="font-family:'Caladea',serif;font-weight:700;font-size:15px;color:#3A2E27;">Bowl de quinoa croquant</div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:#8A7264;font-family:'Poppins',sans-serif;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A7264" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 15 min · Facile</div>
+          <div style="flex-shrink:0;font-size:10px;font-weight:700;background:#E7A98F;color:#FFFBF6;border-radius:12px;padding:3px 9px;font-family:'Poppins',sans-serif;">sain</div>
+        </div>
+      </div>
+    </button><button type="button" class="recipe-row" data-tags="courgette" data-minutes="20" data-name="soupe de courgettes au basilic"
+      onclick="go('d-detail')" aria-label="Voir la recette Soupe de courgettes au basilic" style="all:unset;box-sizing:border-box;cursor:pointer;
+      display:flex;flex-direction:column;background:#FFFBF6;border-radius:20px;border:1px solid #F2E2CC;
+      box-shadow:0 2px 10px rgba(122,74,46,0.06);overflow:hidden;">
+      <div style="height:128px;background:#E4E7C9;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 120 120" width="84" height="84" role="img" aria-label="Illustration du plat">
+      <ellipse cx="60" cy="88" rx="44" ry="9" fill="#00000010"/>
+      <circle cx="60" cy="62" r="42" fill="#FFFCF7"/>
+      <circle cx="60" cy="62" r="42" fill="none" stroke="#F2E2CC" stroke-width="2"/>
+      <ellipse cx="50" cy="55" rx="17" ry="13" fill="#C97B5F"/>
+      <ellipse cx="74" cy="61" rx="13" ry="10" fill="#E8C468"/>
+      <ellipse cx="61" cy="74" rx="11" ry="8" fill="#8FAE6E"/>
+      <path d="M38 40c4-10 10-16 14-18" stroke="#6B8F5C" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg></div>
+      <div style="height:1px;background:#F2E2CC;"></div>
+      <div style="padding:14px 16px;display:flex;flex-direction:column;gap:6px;">
+        <div style="font-family:'Caladea',serif;font-weight:700;font-size:15px;color:#3A2E27;">Soupe de courgettes au basilic</div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:#8A7264;font-family:'Poppins',sans-serif;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A7264" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 20 min · Facile</div>
+          <div style="flex-shrink:0;font-size:10px;font-weight:700;background:#E7A98F;color:#FFFBF6;border-radius:12px;padding:3px 9px;font-family:'Poppins',sans-serif;">sain</div>
+        </div>
+      </div>
+    </button><button type="button" class="recipe-row" data-tags="avocat,poulet" data-minutes="10" data-name="wrap avocat et poulet grillé"
+      onclick="go('d-detail')" aria-label="Voir la recette Wrap avocat et poulet grillé" style="all:unset;box-sizing:border-box;cursor:pointer;
+      display:flex;flex-direction:column;background:#FFFBF6;border-radius:20px;border:1px solid #F2E2CC;
+      box-shadow:0 2px 10px rgba(122,74,46,0.06);overflow:hidden;">
+      <div style="height:128px;background:#E4E7C9;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 120 120" width="84" height="84" role="img" aria-label="Illustration du plat">
+      <ellipse cx="60" cy="88" rx="44" ry="9" fill="#00000010"/>
+      <circle cx="60" cy="62" r="42" fill="#FFFCF7"/>
+      <circle cx="60" cy="62" r="42" fill="none" stroke="#F2E2CC" stroke-width="2"/>
+      <ellipse cx="47" cy="54" rx="17" ry="13" fill="#D97D66"/>
+      <ellipse cx="77" cy="60" rx="13" ry="10" fill="#F0C9A0"/>
+      <ellipse cx="60" cy="77" rx="11" ry="8" fill="#93A876"/>
+      <path d="M38 40c4-10 10-16 14-18" stroke="#6B8F5C" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg></div>
+      <div style="height:1px;background:#F2E2CC;"></div>
+      <div style="padding:14px 16px;display:flex;flex-direction:column;gap:6px;">
+        <div style="font-family:'Caladea',serif;font-weight:700;font-size:15px;color:#3A2E27;">Wrap avocat et poulet grillé</div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:#8A7264;font-family:'Poppins',sans-serif;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A7264" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 10 min · Facile</div>
+          <div style="flex-shrink:0;font-size:10px;font-weight:700;background:#E7A98F;color:#FFFBF6;border-radius:12px;padding:3px 9px;font-family:'Poppins',sans-serif;">sain</div>
+        </div>
+      </div>
+    </button><button type="button" class="recipe-row" data-tags="" data-minutes="30" data-name="curry de lentilles corail"
+      onclick="go('d-detail')" aria-label="Voir la recette Curry de lentilles corail" style="all:unset;box-sizing:border-box;cursor:pointer;
+      display:flex;flex-direction:column;background:#FFFBF6;border-radius:20px;border:1px solid #F2E2CC;
+      box-shadow:0 2px 10px rgba(122,74,46,0.06);overflow:hidden;">
+      <div style="height:128px;background:#E4E7C9;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 120 120" width="84" height="84" role="img" aria-label="Illustration du plat">
+      <ellipse cx="60" cy="88" rx="44" ry="9" fill="#00000010"/>
+      <circle cx="60" cy="62" r="42" fill="#FFFCF7"/>
+      <circle cx="60" cy="62" r="42" fill="none" stroke="#F2E2CC" stroke-width="2"/>
+      <ellipse cx="44" cy="53" rx="17" ry="13" fill="#E8C468"/>
+      <ellipse cx="80" cy="59" rx="13" ry="10" fill="#C97B5F"/>
+      <ellipse cx="59" cy="80" rx="11" ry="8" fill="#8FAE6E"/>
+      <path d="M38 40c4-10 10-16 14-18" stroke="#6B8F5C" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg></div>
+      <div style="height:1px;background:#F2E2CC;"></div>
+      <div style="padding:14px 16px;display:flex;flex-direction:column;gap:6px;">
+        <div style="font-family:'Caladea',serif;font-weight:700;font-size:15px;color:#3A2E27;">Curry de lentilles corail</div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:#8A7264;font-family:'Poppins',sans-serif;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A7264" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 30 min · Moyen</div>
+          <div style="flex-shrink:0;font-size:10px;font-weight:700;background:#E7A98F;color:#FFFBF6;border-radius:12px;padding:3px 9px;font-family:'Poppins',sans-serif;">sain</div>
+        </div>
+      </div>
+    </button><button type="button" class="recipe-row" data-tags="riz" data-minutes="18" data-name="salade de riz complet aux herbes"
+      onclick="go('d-detail')" aria-label="Voir la recette Salade de riz complet aux herbes" style="all:unset;box-sizing:border-box;cursor:pointer;
+      display:flex;flex-direction:column;background:#FFFBF6;border-radius:20px;border:1px solid #F2E2CC;
+      box-shadow:0 2px 10px rgba(122,74,46,0.06);overflow:hidden;">
+      <div style="height:128px;background:#E4E7C9;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 120 120" width="84" height="84" role="img" aria-label="Illustration du plat">
+      <ellipse cx="60" cy="88" rx="44" ry="9" fill="#00000010"/>
+      <circle cx="60" cy="62" r="42" fill="#FFFCF7"/>
+      <circle cx="60" cy="62" r="42" fill="none" stroke="#F2E2CC" stroke-width="2"/>
+      <ellipse cx="51" cy="52" rx="17" ry="13" fill="#93A876"/>
+      <ellipse cx="73" cy="58" rx="13" ry="10" fill="#F0C9A0"/>
+      <ellipse cx="58" cy="73" rx="11" ry="8" fill="#D97D66"/>
+      <path d="M38 40c4-10 10-16 14-18" stroke="#6B8F5C" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg></div>
+      <div style="height:1px;background:#F2E2CC;"></div>
+      <div style="padding:14px 16px;display:flex;flex-direction:column;gap:6px;">
+        <div style="font-family:'Caladea',serif;font-weight:700;font-size:15px;color:#3A2E27;">Salade de riz complet aux herbes</div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:#8A7264;font-family:'Poppins',sans-serif;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A7264" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 18 min · Facile</div>
+          <div style="flex-shrink:0;font-size:10px;font-weight:700;background:#E7A98F;color:#FFFBF6;border-radius:12px;padding:3px 9px;font-family:'Poppins',sans-serif;">sain</div>
+        </div>
+      </div>
+    </button><button type="button" class="recipe-row" data-tags="courgette" data-minutes="22" data-name="galettes de courgette légères"
+      onclick="go('d-detail')" aria-label="Voir la recette Galettes de courgette légères" style="all:unset;box-sizing:border-box;cursor:pointer;
+      display:flex;flex-direction:column;background:#FFFBF6;border-radius:20px;border:1px solid #F2E2CC;
+      box-shadow:0 2px 10px rgba(122,74,46,0.06);overflow:hidden;">
+      <div style="height:128px;background:#E4E7C9;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 120 120" width="84" height="84" role="img" aria-label="Illustration du plat">
+      <ellipse cx="60" cy="88" rx="44" ry="9" fill="#00000010"/>
+      <circle cx="60" cy="62" r="42" fill="#FFFCF7"/>
+      <circle cx="60" cy="62" r="42" fill="none" stroke="#F2E2CC" stroke-width="2"/>
+      <ellipse cx="48" cy="51" rx="17" ry="13" fill="#C97B5F"/>
+      <ellipse cx="76" cy="57" rx="13" ry="10" fill="#E8C468"/>
+      <ellipse cx="57" cy="76" rx="11" ry="8" fill="#8FAE6E"/>
+      <path d="M38 40c4-10 10-16 14-18" stroke="#6B8F5C" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg></div>
+      <div style="height:1px;background:#F2E2CC;"></div>
+      <div style="padding:14px 16px;display:flex;flex-direction:column;gap:6px;">
+        <div style="font-family:'Caladea',serif;font-weight:700;font-size:15px;color:#3A2E27;">Galettes de courgette légères</div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:#8A7264;font-family:'Poppins',sans-serif;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A7264" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 22 min · Moyen</div>
+          <div style="flex-shrink:0;font-size:10px;font-weight:700;background:#E7A98F;color:#FFFBF6;border-radius:12px;padding:3px 9px;font-family:'Poppins',sans-serif;">sain</div>
+        </div>
+      </div>
+    </button><button type="button" class="recipe-row" data-tags="" data-minutes="25" data-name="bowl de patate douce rôtie"
+      onclick="go('d-detail')" aria-label="Voir la recette Bowl de patate douce rôtie" style="all:unset;box-sizing:border-box;cursor:pointer;
+      display:flex;flex-direction:column;background:#FFFBF6;border-radius:20px;border:1px solid #F2E2CC;
+      box-shadow:0 2px 10px rgba(122,74,46,0.06);overflow:hidden;">
+      <div style="height:128px;background:#E4E7C9;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 120 120" width="84" height="84" role="img" aria-label="Illustration du plat">
+      <ellipse cx="60" cy="88" rx="44" ry="9" fill="#00000010"/>
+      <circle cx="60" cy="62" r="42" fill="#FFFCF7"/>
+      <circle cx="60" cy="62" r="42" fill="none" stroke="#F2E2CC" stroke-width="2"/>
+      <ellipse cx="45" cy="50" rx="17" ry="13" fill="#F0C9A0"/>
+      <ellipse cx="79" cy="56" rx="13" ry="10" fill="#C97B5F"/>
+      <ellipse cx="56" cy="79" rx="11" ry="8" fill="#8FAE6E"/>
+      <path d="M38 40c4-10 10-16 14-18" stroke="#6B8F5C" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg></div>
+      <div style="height:1px;background:#F2E2CC;"></div>
+      <div style="padding:14px 16px;display:flex;flex-direction:column;gap:6px;">
+        <div style="font-family:'Caladea',serif;font-weight:700;font-size:15px;color:#3A2E27;">Bowl de patate douce rôtie</div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:#8A7264;font-family:'Poppins',sans-serif;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A7264" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 25 min · Facile</div>
+          <div style="flex-shrink:0;font-size:10px;font-weight:700;background:#E7A98F;color:#FFFBF6;border-radius:12px;padding:3px 9px;font-family:'Poppins',sans-serif;">sain</div>
+        </div>
+      </div>
+    </button><button type="button" class="recipe-row" data-tags="courgette" data-minutes="16" data-name="poêlée de légumes de saison"
+      onclick="go('d-detail')" aria-label="Voir la recette Poêlée de légumes de saison" style="all:unset;box-sizing:border-box;cursor:pointer;
+      display:flex;flex-direction:column;background:#FFFBF6;border-radius:20px;border:1px solid #F2E2CC;
+      box-shadow:0 2px 10px rgba(122,74,46,0.06);overflow:hidden;">
+      <div style="height:128px;background:#E4E7C9;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 120 120" width="84" height="84" role="img" aria-label="Illustration du plat">
+      <ellipse cx="60" cy="88" rx="44" ry="9" fill="#00000010"/>
+      <circle cx="60" cy="62" r="42" fill="#FFFCF7"/>
+      <circle cx="60" cy="62" r="42" fill="none" stroke="#F2E2CC" stroke-width="2"/>
+      <ellipse cx="52" cy="49" rx="17" ry="13" fill="#8FAE6E"/>
+      <ellipse cx="72" cy="55" rx="13" ry="10" fill="#E7A98F"/>
+      <ellipse cx="55" cy="72" rx="11" ry="8" fill="#F0C9A0"/>
+      <path d="M38 40c4-10 10-16 14-18" stroke="#6B8F5C" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg></div>
+      <div style="height:1px;background:#F2E2CC;"></div>
+      <div style="padding:14px 16px;display:flex;flex-direction:column;gap:6px;">
+        <div style="font-family:'Caladea',serif;font-weight:700;font-size:15px;color:#3A2E27;">Poêlée de légumes de saison</div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="display:flex;align-items:center;gap:5px;font-size:12px;color:#8A7264;font-family:'Poppins',sans-serif;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A7264" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 16 min · Facile</div>
+          <div style="flex-shrink:0;font-size:10px;font-weight:700;background:#E7A98F;color:#FFFBF6;border-radius:12px;padding:3px 9px;font-family:'Poppins',sans-serif;">sain</div>
+        </div>
+      </div>
+    </button><div class="empty-state" id="d-empty" style="display:none;flex-direction:column;align-items:center;gap:10px;padding:28px 10px;text-align:center;grid-column:1/-1;">
+      <div style="width:56px;height:56px;border-radius:50%;background:#F6DFC4;display:flex;align-items:center;justify-content:center;color:#B0613F;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#B0613F" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7"/><path d="m21 21-4.35-4.35"/><path d="M7.5 10h5"/></svg></div>
+      <div style="font-size:13px;color:#8A7264;">Aucune recette ne correspond à ce filtre.</div>
+    </div></div>
+        </div>
+      </div>
+    </div></div><div class="screen" id="d-detail" style="display:none;">
+    <div style="width:1440px;height:900px;box-sizing:border-box;background:#FBF1E6;display:flex;flex-direction:column;overflow:hidden;font-family:'Poppins',sans-serif;">
+      <div style="flex-shrink:0;height:78px;padding:0 44px;display:flex;align-items:center;gap:24px;border-bottom:1px solid #F2E2CC;"><button type="button" onclick="go('d-accueil')" style="all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:10px;">
+      <span style="width:32px;height:32px;border-radius:9px;border:1px solid #EAD3B8;display:flex;align-items:center;justify-content:center;color:#3A2E27;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3A2E27" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg></span>
+      <span style="font-size:13px;color:#8A7264;font-family:'Poppins',sans-serif;">Retour à toutes les recettes</span>
+    </button><div style="width:420px;"></div><div style="flex-grow:1;"></div></div>
+      <div style="flex-grow:1;overflow:auto;padding:40px 48px 48px 48px;display:flex;gap:48px;">
+        <div style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:22px;">
+          <div style="width:100%;height:300px;border-radius:20px;background:#E4E7C9;display:flex;align-items:center;justify-content:center;"><svg viewBox="0 0 120 120" width="220" height="220" role="img" aria-label="Illustration du plat">
+      <ellipse cx="60" cy="88" rx="44" ry="9" fill="#00000010"/>
+      <circle cx="60" cy="62" r="42" fill="#FFFCF7"/>
+      <circle cx="60" cy="62" r="42" fill="none" stroke="#F2E2CC" stroke-width="2"/>
+      <ellipse cx="50" cy="55" rx="17" ry="13" fill="#C97B5F"/>
+      <ellipse cx="74" cy="61" rx="13" ry="10" fill="#E8C468"/>
+      <ellipse cx="61" cy="74" rx="11" ry="8" fill="#8FAE6E"/>
+      <path d="M38 40c4-10 10-16 14-18" stroke="#6B8F5C" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg></div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:#3A2E27;">Étapes</div>
+            <div><div style="margin-bottom:15px;"><div style="display:flex;gap:12px;">
+      <div style="width:24px;height:24px;flex-shrink:0;border-radius:50%;background:#93A876;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;font-family:'Poppins',sans-serif;">1</div>
+      <div style="font-size:14px;line-height:1.5;color:#3A2E27;font-family:'Poppins',sans-serif;">Éplucher et couper les courgettes et l'oignon</div>
+    </div></div><div style="margin-bottom:15px;"><div style="display:flex;gap:12px;">
+      <div style="width:24px;height:24px;flex-shrink:0;border-radius:50%;background:#93A876;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;font-family:'Poppins',sans-serif;">2</div>
+      <div style="font-size:14px;line-height:1.5;color:#3A2E27;font-family:'Poppins',sans-serif;">Faire revenir l'oignon quelques minutes</div>
+    </div></div><div style="margin-bottom:15px;"><div style="display:flex;gap:12px;">
+      <div style="width:24px;height:24px;flex-shrink:0;border-radius:50%;background:#93A876;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;font-family:'Poppins',sans-serif;">3</div>
+      <div style="font-size:14px;line-height:1.5;color:#3A2E27;font-family:'Poppins',sans-serif;">Ajouter les courgettes et le bouillon, laisser mijoter 15 min</div>
+    </div></div><div style="margin-bottom:15px;"><div style="display:flex;gap:12px;">
+      <div style="width:24px;height:24px;flex-shrink:0;border-radius:50%;background:#93A876;color:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;font-family:'Poppins',sans-serif;">4</div>
+      <div style="font-size:14px;line-height:1.5;color:#3A2E27;font-family:'Poppins',sans-serif;">Mixer et assaisonner selon le goût</div>
+    </div></div></div>
+          </div>
+        </div>
+        <div style="width:380px;flex-shrink:0;display:flex;flex-direction:column;gap:18px;">
+          <div style="font-family:'Caladea',serif;font-weight:700;font-size:26px;color:#3A2E27;line-height:1.25;">Soupe de courgettes au basilic</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <div style="border:1px solid #EAD3B8;border-radius:20px;padding:5px 12px;font-size:12px;color:#8A7264;display:flex;align-items:center;gap:5px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8A7264" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 20 min</div>
+      <div style="border:1px solid #EAD3B8;border-radius:20px;padding:5px 12px;font-size:12px;color:#8A7264;">Difficulté : Facile</div>
+      <div style="flex-shrink:0;font-size:11px;font-weight:700;background:#E7A98F;color:#FFFBF6;border-radius:12px;padding:4px 10px;font-family:'Poppins',sans-serif;">sain</div>
+    </div>
+          <div style="height:1px;background:#F2E2CC;"></div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:#3A2E27;margin-bottom:4px;">Ingrédients <span style="font-weight:400;text-transform:none;color:#8A7264;font-size:12px;">(coche ce que tu as déjà)</span></div>
+            <div><div style="margin-bottom:6px;"><button type="button" class="ing-check" onclick="toggleIngredient(this)" data-checked="true" style="all:unset;cursor:pointer;
+      display:flex;align-items:center;gap:10px;width:100%;padding:3px 0;">
+      <span class="box" style="width:18px;height:18px;border-radius:5px;border:1.5px solid #93A876;background:#93A876;
+        display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+      <span class="lbl" style="font-size:14px;color:#3A2E27;font-family:'Poppins',sans-serif;">500 g de courgettes</span>
+    </button></div><div style="margin-bottom:6px;"><button type="button" class="ing-check" onclick="toggleIngredient(this)" data-checked="true" style="all:unset;cursor:pointer;
+      display:flex;align-items:center;gap:10px;width:100%;padding:3px 0;">
+      <span class="box" style="width:18px;height:18px;border-radius:5px;border:1.5px solid #93A876;background:#93A876;
+        display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+      <span class="lbl" style="font-size:14px;color:#3A2E27;font-family:'Poppins',sans-serif;">1 oignon</span>
+    </button></div><div style="margin-bottom:6px;"><button type="button" class="ing-check" onclick="toggleIngredient(this)" data-checked="true" style="all:unset;cursor:pointer;
+      display:flex;align-items:center;gap:10px;width:100%;padding:3px 0;">
+      <span class="box" style="width:18px;height:18px;border-radius:5px;border:1.5px solid #93A876;background:#93A876;
+        display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+      <span class="lbl" style="font-size:14px;color:#3A2E27;font-family:'Poppins',sans-serif;">1 litre de bouillon de légumes</span>
+    </button></div><div style="margin-bottom:6px;"><button type="button" class="ing-check" onclick="toggleIngredient(this)" data-checked="true" style="all:unset;cursor:pointer;
+      display:flex;align-items:center;gap:10px;width:100%;padding:3px 0;">
+      <span class="box" style="width:18px;height:18px;border-radius:5px;border:1.5px solid #93A876;background:#93A876;
+        display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+      <span class="lbl" style="font-size:14px;color:#3A2E27;font-family:'Poppins',sans-serif;">Épices au choix</span>
+    </button></div></div>
+          </div>
+        </div>
+      </div>
+    </div></div><div class="screen" id="d-aucun" style="display:none;">
+    <div style="width:1440px;height:900px;box-sizing:border-box;background:#FBF1E6;display:flex;flex-direction:column;overflow:hidden;font-family:'Poppins',sans-serif;">
+      <div style="flex-shrink:0;height:78px;padding:0 44px;display:flex;align-items:center;gap:24px;border-bottom:1px solid #F2E2CC;"><button type="button" onclick="go('d-recherche')" style="all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:10px;">
+      <span style="width:32px;height:32px;border-radius:9px;border:1px solid #EAD3B8;display:flex;align-items:center;justify-content:center;color:#3A2E27;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3A2E27" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg></span>
+      <span style="font-size:13px;color:#8A7264;font-family:'Poppins',sans-serif;">Retour à toutes les recettes</span>
+    </button><div style="width:420px;"></div><div style="flex-grow:1;"></div></div>
+      <div style="flex-grow:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;">
+        <div style="width:100px;height:100px;border-radius:50%;background:#F6DFC4;display:flex;align-items:center;justify-content:center;color:#B0613F;"><svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#B0613F" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7"/><path d="m21 21-4.35-4.35"/><path d="M7.5 10h5"/></svg></div>
+        <div style="font-family:'Caladea',serif;font-weight:700;font-size:21px;color:#3A2E27;">Aucune recette trouvée</div>
+        <div style="font-size:14px;color:#8A7264;text-align:center;line-height:1.5;max-width:420px;">Essaie une autre recherche ou explore toutes les recettes disponibles.</div>
+        <button type="button" onclick="go('d-accueil')" style="all:unset;box-sizing:border-box;cursor:pointer;margin-top:8px;border-radius:25px;
+          padding:13px 26px;background:#C97B5F;color:#FFFBF6;font-family:'Poppins',sans-serif;font-size:14px;font-weight:700;">Voir toutes les recettes</button></div>
+    </div></div></div>
+    </div>
+  </div>
+
+<script>
+// ---- navigation ----
+function go(id) {
+  var target = document.getElementById(id);
+  var group = target.closest('.device-group');
+  group.querySelectorAll('.screen').forEach(function(el) { el.style.display = 'none'; });
+  target.style.display = 'flex';
+  var tabsId = group.id === 'group-mobile' ? 'tabs-mobile' : 'tabs-desktop';
+  document.querySelectorAll('#' + tabsId + ' .tab-btn').forEach(function(b) {
+    b.classList.toggle('active', b.getAttribute('data-tab') === id);
+  });
+}
+function showDevice(name) {
+  document.getElementById('group-mobile').style.display = name === 'mobile' ? 'flex' : 'none';
+  document.getElementById('group-desktop').style.display = name === 'desktop' ? 'flex' : 'none';
+  document.getElementById('tabs-mobile').style.display = name === 'mobile' ? 'flex' : 'none';
+  document.getElementById('tabs-desktop').style.display = name === 'desktop' ? 'flex' : 'none';
+  document.getElementById('btn-mobile').classList.toggle('active', name === 'mobile');
+  document.getElementById('btn-desktop').classList.toggle('active', name === 'desktop');
+}
+
+// ---- chips (single-select per group) ----
+function selectChip(btn) {
+  var group = btn.getAttribute('data-group');
+  document.querySelectorAll('.chip[data-group="' + group + '"]').forEach(function(c) {
+    c.setAttribute('data-selected', 'false');
+    c.style.background = 'transparent';
+    c.style.borderColor = '#EAD3B8';
+  });
+  btn.setAttribute('data-selected', 'true');
+  btn.style.background = '#E4E7C9';
+  btn.style.borderColor = '#93A876';
+}
+
+// ---- category dropdown ----
+function toggleCategory(prefix) {
+  var panel = document.getElementById(prefix + 'cat-panel');
+  panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+}
+function pickCategory(prefix, label) {
+  document.getElementById(prefix + 'cat-label').textContent = label;
+  document.getElementById(prefix + 'cat-panel').style.display = 'none';
+}
+
+// ---- ingredient checkboxes (detail screen) ----
+function toggleIngredient(btn) {
+  var checked = btn.getAttribute('data-checked') === 'true';
+  btn.setAttribute('data-checked', checked ? 'false' : 'true');
+}
+
+// ---- carousel (accueil) ----
+var carouselIndex = 0;
+function carouselMove(dir) {
+  var slides = document.querySelectorAll('.carousel-slide');
+  var dots = document.querySelectorAll('.carousel-dot');
+  slides[carouselIndex].style.display = 'none';
+  dots[carouselIndex].style.background = '#E7D3BC';
+  carouselIndex = (carouselIndex + dir + slides.length) % slides.length;
+  slides[carouselIndex].style.display = 'flex';
+  dots[carouselIndex].style.background = '#E7A98F';
+}
+
+// ---- filtering (recherche screens, mobile '' and desktop 'd-') ----
+function applyFilter(prefix) {
+  var listEl = document.getElementById(prefix + 'list') || document.getElementById(prefix + 'd-list'.replace('dd-','d-'));
+  var container = prefix === '' ? document.getElementById('list') : document.getElementById('d-list');
+  var countEl = prefix === '' ? document.getElementById('count') : document.getElementById('d-count');
+  var emptyEl = prefix === '' ? document.getElementById('empty') : document.getElementById('d-empty');
+  var searchInput = prefix === '' ? document.getElementById('searchbox') : document.getElementById('d-searchbox');
+  var searchText = searchInput ? searchInput.value.trim().toLowerCase() : '';
+
+  var ingBtn = document.querySelector('.chip[data-group="' + prefix + 'ing"][data-selected="true"]');
+  var durBtn = document.querySelector('.chip[data-group="' + prefix + 'dur"][data-selected="true"]');
+  var ingredient = ingBtn ? ingBtn.getAttribute('data-value') : null;
+  var maxMinutes = durBtn ? parseInt(durBtn.getAttribute('data-value'), 10) : null;
+
+  var rows = container.querySelectorAll('.recipe-row');
+  var visibleCount = 0;
+  rows.forEach(function(row) {
+    var tags = (row.getAttribute('data-tags') || '').split(',').filter(Boolean);
+    var minutes = parseInt(row.getAttribute('data-minutes'), 10);
+    var name = row.getAttribute('data-name') || '';
+    var matchSearch = searchText === '' || name.indexOf(searchText) !== -1;
+    var matchIngredient = !ingredient || tags.indexOf(ingredient) !== -1;
+    var matchDuration = !maxMinutes || minutes <= maxMinutes;
+    var visible = matchSearch && matchIngredient && matchDuration;
+    row.style.display = visible ? '' : 'none';
+    if (visible) visibleCount++;
+  });
+
+  if (emptyEl) emptyEl.style.display = visibleCount === 0 ? 'flex' : 'none';
+  if (countEl) {
+    var label = ingredient ? (' avec « ' + (ingBtn.textContent) + ' »') : '';
+    countEl.textContent = visibleCount + (visibleCount > 1 ? ' recettes trouvées' : ' recette trouvée') + label;
+  }
+}
+
+// initial state: apply default selection (Courgette + 15 min) on load
+applyFilter('');
+applyFilter('d-');
+</script>
+</body></html>
