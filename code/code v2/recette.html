@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Soupe de courgettes au basilic – Greenplate</title>
+  <meta name="description" content="Soupe de courgettes au basilic : 20 minutes, facile, ingrédients et étapes.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caladea:wght@700&family=Poppins:wght@400;600&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <svg class="sprite" aria-hidden="true">
+    <symbol id="i-retour" viewBox="0 0 24 24"><path d="m15 6-6 6 6 6"/></symbol>
+    <symbol id="i-horloge" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="plat" viewBox="0 0 120 120">
+      <circle class="plat__assiette" cx="60" cy="62" r="42"/>
+      <ellipse class="plat__a" cx="48" cy="52" rx="17" ry="13"/>
+      <ellipse class="plat__b" cx="76" cy="58" rx="13" ry="10"/>
+      <ellipse class="plat__c" cx="58" cy="76" rx="11" ry="8"/>
+      <path class="plat__herbe" d="M38 40c4-10 10-16 14-18"/>
+    </symbol>
+  </svg>
+
+  <header class="entete">
+    <div class="conteneur entete__contenu">
+      <p class="logo"><a href="accueil.html">Greenplate</a></p>
+    </div>
+  </header>
+
+  <main class="conteneur">
+    <a class="retour" href="recherche.html"><svg class="icone" aria-hidden="true"><use href="#i-retour"/></svg>Retour aux recettes</a>
+
+    <article class="recette">
+      <div class="recette__image"><svg class="plat" aria-hidden="true"><use href="#plat"/></svg></div>
+
+      <div class="recette__infos">
+        <h1 class="titre-page">Soupe de courgettes au basilic</h1>
+        <ul class="infos">
+          <li><svg class="icone" aria-hidden="true"><use href="#i-horloge"/></svg>20 min</li>
+          <li>Difficulté : Facile</li>
+          <li class="tag">sain</li>
+        </ul>
+
+        <section aria-labelledby="titre-ingredients">
+          <h2 class="surtitre" id="titre-ingredients">Ingrédients <span>(coche ce que tu as déjà)</span></h2>
+          <ul>
+            <li><label class="ingredient"><input type="checkbox"><span>500 g de courgettes</span></label></li>
+            <li><label class="ingredient"><input type="checkbox"><span>1 oignon</span></label></li>
+            <li><label class="ingredient"><input type="checkbox"><span>1 litre de bouillon de légumes</span></label></li>
+            <li><label class="ingredient"><input type="checkbox"><span>1 poignée de basilic frais</span></label></li>
+            <li><label class="ingredient"><input type="checkbox"><span>Épices au choix</span></label></li>
+          </ul>
+        </section>
+      </div>
+
+      <section class="recette__etapes" aria-labelledby="titre-etapes">
+        <h2 class="surtitre" id="titre-etapes">Étapes</h2>
+        <ol class="etapes">
+          <li>Éplucher et couper les courgettes et l'oignon.</li>
+          <li>Faire revenir l'oignon quelques minutes.</li>
+          <li>Ajouter les courgettes et le bouillon, laisser mijoter 15 min.</li>
+          <li>Ajouter le basilic, mixer et assaisonner selon le goût.</li>
+        </ol>
+      </section>
+    </article>
+  </main>
+</body>
+</html>

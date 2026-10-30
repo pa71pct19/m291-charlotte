@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Recherche par ingrédient – Greenplate</title>
+  <meta name="description" content="Filtre les recettes Greenplate par ingrédient, catégorie et durée de préparation.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caladea:wght@700&family=Poppins:wght@400;600&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <script src="recherche.js" defer></script>
+</head>
+<body>
+
+  <svg class="sprite" aria-hidden="true">
+    <symbol id="i-retour" viewBox="0 0 24 24"><path d="m15 6-6 6 6 6"/></symbol>
+    <symbol id="i-recherche" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+    <symbol id="i-horloge" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="plat" viewBox="0 0 120 120">
+      <circle class="plat__assiette" cx="60" cy="62" r="42"/>
+      <ellipse class="plat__a" cx="48" cy="52" rx="17" ry="13"/>
+      <ellipse class="plat__b" cx="76" cy="58" rx="13" ry="10"/>
+      <ellipse class="plat__c" cx="58" cy="76" rx="11" ry="8"/>
+      <path class="plat__herbe" d="M38 40c4-10 10-16 14-18"/>
+    </symbol>
+  </svg>
+
+  <header class="entete">
+    <div class="conteneur entete__contenu">
+      <p class="logo"><a href="accueil.html">Greenplate</a></p>
+    </div>
+  </header>
+
+  <main class="conteneur">
+    <a class="retour" href="accueil.html"><svg class="icone" aria-hidden="true"><use href="#i-retour"/></svg>Toutes les recettes</a>
+    <h1 class="titre-page">Recherche par ingrédient</h1>
+
+    <!-- Barre de recherche : nom de recette ou aliment.
+         Le champ est hors du <form> pour pouvoir être au-dessus de tout, mais form="filtres"
+         l'y rattache : Entrée ou la loupe envoient la recherche avec les filtres. -->
+    <div class="barre" role="search">
+      <label for="q">Recette ou aliment</label>
+      <div class="champ">
+        <input id="q" name="q" type="search" form="filtres" placeholder="Ex. : soupe, poulet, lentilles" autocomplete="off" enterkeyhint="search">
+        <button class="champ__bouton" type="submit" form="filtres" aria-label="Rechercher"><svg class="icone" aria-hidden="true"><use href="#i-recherche"/></svg></button>
+      </div>
+    </div>
+
+    <div class="mise-en-page">
+
+      <!-- Chaque groupe a son option « Aucun » : elle ne touche qu'à son propre groupe -->
+      <form class="filtres" id="filtres" action="recherche.html#resultats">
+        <fieldset class="groupe">
+          <legend>Ingrédient</legend>
+          <div class="choix">
+            <label class="puce"><input type="checkbox" name="ing" value="courgette"><span>Courgette</span></label>
+            <label class="puce"><input type="checkbox" name="ing" value="riz"><span>Riz</span></label>
+            <label class="puce"><input type="checkbox" name="ing" value="poulet"><span>Poulet</span></label>
+            <label class="puce"><input type="checkbox" name="ing" value="avocat"><span>Avocat</span></label>
+            <label class="puce"><input type="checkbox" name="ing" value="oeuf"><span>Œufs</span></label>
+            <label class="puce"><input type="checkbox" name="ing" value="quinoa"><span>Quinoa</span></label>
+            <label class="puce"><input type="checkbox" name="ing" value="aucun" checked><span>Aucun</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="groupe">
+          <legend>Catégorie</legend>
+          <div class="choix">
+            <label class="puce"><input type="radio" name="cat" value="plat"><span>Plat</span></label>
+            <label class="puce"><input type="radio" name="cat" value="soupe"><span>Soupe</span></label>
+            <label class="puce"><input type="radio" name="cat" value="salade"><span>Salade</span></label>
+            <label class="puce"><input type="radio" name="cat" value="dessert"><span>Dessert</span></label>
+            <label class="puce"><input type="radio" name="cat" value="aucun" checked><span>Aucun</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="groupe">
+          <legend>Durée de préparation (max)</legend>
+          <div class="choix">
+            <label class="puce"><input type="radio" name="duree" value="10"><span>10 min</span></label>
+            <label class="puce"><input type="radio" name="duree" value="15"><span>15 min</span></label>
+            <label class="puce"><input type="radio" name="duree" value="30"><span>30 min</span></label>
+            <label class="puce"><input type="radio" name="duree" value="45"><span>45 min</span></label>
+            <label class="puce"><input type="radio" name="duree" value="aucun" checked><span>Aucun</span></label>
+          </div>
+        </fieldset>
+
+        <button class="bouton" type="submit">Filtrer</button>
+      </form>
+
+      <section id="resultats" aria-labelledby="compteur">
+        <p class="compteur" id="compteur" aria-live="polite">8 recettes trouvées</p>
+        <ul class="grille">
+          <li class="carte" data-ing="quinoa" data-cat="plat" data-duree="15"
+                  data-aliments="quinoa, concombre, radis, graines de tournesol">
+            <div class="carte__image"><svg class="plat" aria-hidden="true"><use href="#plat"/></svg></div>
+            <div class="carte__corps">
+              <h3 class="carte__titre"><a href="recette.html">Bowl de quinoa croquant</a></h3>
+              <p class="carte__meta"><svg class="icone" aria-hidden="true"><use href="#i-horloge"/></svg>15 min · Facile<span class="tag">sain</span></p>
+            </div>
+          </li>
+          <li class="carte" data-ing="courgette" data-cat="soupe" data-duree="20"
+                  data-aliments="courgette, oignon, bouillon de légumes, basilic">
+            <div class="carte__image"><svg class="plat" aria-hidden="true"><use href="#plat"/></svg></div>
+            <div class="carte__corps">
+              <h3 class="carte__titre"><a href="recette.html">Soupe de courgettes au basilic</a></h3>
+              <p class="carte__meta"><svg class="icone" aria-hidden="true"><use href="#i-horloge"/></svg>20 min · Facile<span class="tag">sain</span></p>
+            </div>
+          </li>
+          <li class="carte" data-ing="avocat poulet" data-cat="plat" data-duree="10"
+                  data-aliments="avocat, poulet, tortilla, salade, yaourt">
+            <div class="carte__image"><svg class="plat" aria-hidden="true"><use href="#plat"/></svg></div>
+            <div class="carte__corps">
+              <h3 class="carte__titre"><a href="recette.html">Wrap avocat et poulet grillé</a></h3>
+              <p class="carte__meta"><svg class="icone" aria-hidden="true"><use href="#i-horloge"/></svg>10 min · Facile<span class="tag">sain</span></p>
+            </div>
+          </li>
+          <li class="carte" data-ing="" data-cat="plat" data-duree="30"
+                  data-aliments="lentilles corail, lait de coco, oignon, tomate, curry">
+            <div class="carte__image"><svg class="plat" aria-hidden="true"><use href="#plat"/></svg></div>
+            <div class="carte__corps">
+              <h3 class="carte__titre"><a href="recette.html">Curry de lentilles corail</a></h3>
+              <p class="carte__meta"><svg class="icone" aria-hidden="true"><use href="#i-horloge"/></svg>30 min · Moyen<span class="tag">sain</span></p>
+            </div>
+          </li>
+          <li class="carte" data-ing="riz" data-cat="salade" data-duree="18"
+                  data-aliments="riz, tomate, concombre, citron, herbes">
+            <div class="carte__image"><svg class="plat" aria-hidden="true"><use href="#plat"/></svg></div>
+            <div class="carte__corps">
+              <h3 class="carte__titre"><a href="recette.html">Salade de riz complet aux herbes</a></h3>
+              <p class="carte__meta"><svg class="icone" aria-hidden="true"><use href="#i-horloge"/></svg>18 min · Facile<span class="tag">sain</span></p>
+            </div>
+          </li>
+          <li class="carte" data-ing="courgette oeuf" data-cat="plat" data-duree="22"
+                  data-aliments="courgette, œuf, farine, ciboulette">
+            <div class="carte__image"><svg class="plat" aria-hidden="true"><use href="#plat"/></svg></div>
+            <div class="carte__corps">
+              <h3 class="carte__titre"><a href="recette.html">Galettes de courgette légères</a></h3>
+              <p class="carte__meta"><svg class="icone" aria-hidden="true"><use href="#i-horloge"/></svg>22 min · Moyen<span class="tag">sain</span></p>
+            </div>
+          </li>
+          <li class="carte" data-ing="" data-cat="plat" data-duree="25"
+                  data-aliments="patate douce, pois chiches, épinards, tahini">
+            <div class="carte__image"><svg class="plat" aria-hidden="true"><use href="#plat"/></svg></div>
+            <div class="carte__corps">
+              <h3 class="carte__titre"><a href="recette.html">Bowl de patate douce rôtie</a></h3>
+              <p class="carte__meta"><svg class="icone" aria-hidden="true"><use href="#i-horloge"/></svg>25 min · Facile<span class="tag">sain</span></p>
+            </div>
+          </li>
+          <li class="carte" data-ing="courgette" data-cat="plat" data-duree="16"
+                  data-aliments="courgette, poivron, carotte, brocoli, oignon">
+            <div class="carte__image"><svg class="plat" aria-hidden="true"><use href="#plat"/></svg></div>
+            <div class="carte__corps">
+              <h3 class="carte__titre"><a href="recette.html">Poêlée de légumes de saison</a></h3>
+              <p class="carte__meta"><svg class="icone" aria-hidden="true"><use href="#i-horloge"/></svg>16 min · Facile<span class="tag">sain</span></p>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+    </div>
+  </main>
+</body>
+</html>

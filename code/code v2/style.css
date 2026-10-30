@@ -1,0 +1,527 @@
+/* ==========================================================================
+   Greenplate – direction « Chaleureux » · 4 pages : accueil, recherche,
+   recette, aucun résultat.
+   Mobile first : les règles de base visent 390 px.
+   La media query (min-width: 768px), en fin de fichier, adapte au bureau.
+
+   Choix de mise en page
+   - CSS Grid  → tout ce qui est à deux dimensions : la grille de cartes
+                 (« auto-fill + minmax » ajuste seul le nombre de colonnes),
+                 la page de filtres (panneau + résultats) et la fiche recette
+                 (image / étapes à gauche, infos à droite).
+   - Flexbox   → tout ce qui s'aligne sur un seul axe : en-tête, carte,
+                 ligne de méta, puces de filtre, boutons.
+   - Aucun débordement horizontal : largeurs en %, fr et rem (jamais en px
+     fixes), textes qui passent à la ligne (min-inline-size: 0).
+   ========================================================================== */
+
+
+/* 1. CHARTE GRAPHIQUE ------------------------------------------------------ */
+:root {
+  /* Couleurs */
+  --fond: #FBF1E6;
+  --surface: #FFFBF6;
+  --texte: #3A2E27;
+  --texte-doux: #7B6455;          /* 4,96:1 sur le fond (AA) */
+  --brun: #8A5A3E;                /* logo, bordures de champ, focus */
+  --terracotta: #A85A3D;          /* fond des boutons : texte crème à 4,86:1 (AA) */
+  --terracotta-survol: #8F4A30;
+  --terracotta-clair: #E7A98F;    /* tag « sain » : texte brun à 6,54:1 (AA) */
+  --peche: #F6DFC4;
+  --sauge: #93A876;
+  --sauge-clair: #E4E7C9;
+  --sauge-texte: #2E3B22;         /* chiffre des étapes sur sauge : 4,59:1 (AA) */
+  --bordure: #F2E2CC;
+
+  /* Illustrations de plats */
+  --plat-vert: #8FAE6E;
+  --plat-brique: #D97D66;
+  --plat-moutarde: #E8C468;
+  --plat-sable: #F0C9A0;
+  --plat-herbe: #6B8F5C;
+
+  /* Typographie */
+  --police-titre: "Caladea", Cambria, Georgia, serif;
+  --police-texte: "Poppins", system-ui, sans-serif;
+  --taille-xs: .75rem;
+  --taille-s: .875rem;
+  --taille-m: .9375rem;
+  --taille-l: 1.0625rem;
+  --taille-xl: 1.5rem;
+  --taille-xxl: 1.625rem;
+
+  /* Espacements, formes, ombres */
+  --espace-xs: .25rem;
+  --espace-s: .5rem;
+  --espace-m: 1rem;
+  --espace-l: 1.5rem;
+  --espace-xl: 2.5rem;
+  --marge: 1.25rem;               /* marge latérale de la page (agrandie au bureau) */
+  --largeur-max: 90rem;
+  --rayon-carte: 1.25rem;
+  --rayon-image: .875rem;
+  --rayon-pilule: 999px;
+  --ombre: 0 2px 10px rgb(122 74 46 / 6%);
+  --ombre-survol: 0 6px 18px rgb(122 74 46 / 14%);
+}
+
+
+/* 2. BASE ------------------------------------------------------------------ */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--fond);
+  color: var(--texte);
+  font: 400 var(--taille-s)/1.5 var(--police-texte);
+}
+
+h1, h2, h3, p, ul, ol { margin: 0; padding: 0; }
+ul, ol { list-style: none; }
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 3px solid var(--brun); outline-offset: 3px; }
+
+.conteneur {
+  max-inline-size: var(--largeur-max);
+  margin-inline: auto;
+  padding-inline: var(--marge);
+}
+
+.sprite { position: absolute; inline-size: 0; block-size: 0; overflow: hidden; }
+
+.icone {
+  flex: none;
+  inline-size: 1.25em;
+  block-size: 1.25em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+
+/* 3. EN-TÊTE : logo (+ accès à la recherche sur l'accueil) ----------------- */
+.entete__contenu {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-m);
+  padding-block: 1.375rem var(--espace-m);
+}
+
+.logo {
+  font: 700 var(--taille-xl)/1.2 var(--police-titre);
+  color: var(--brun);
+}
+
+/* Bouton principal (lien ou <button>) */
+.bouton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .625rem;
+  min-block-size: 3.125rem;
+  padding-inline: var(--espace-m);
+  border: 0;
+  border-radius: var(--rayon-pilule);
+  background: var(--terracotta);
+  color: var(--surface);
+  font: 600 var(--taille-s)/1.2 var(--police-texte);
+  cursor: pointer;
+}
+.bouton:hover { background: var(--terracotta-survol); }
+
+/* Variante : accès à la recherche (texte à gauche, flèche à droite) */
+.recherche { justify-content: flex-start; }
+.recherche span { flex: 1; }
+
+
+/* 4. CONTENU PRINCIPAL ----------------------------------------------------- */
+main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-l);
+  padding-block: var(--espace-s) var(--espace-xl);
+}
+
+.surtitre {
+  margin-block-end: var(--espace-s);
+  font-size: var(--taille-xs);
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--texte-doux);
+}
+
+.surtitre span { font-weight: 400; letter-spacing: 0; text-transform: none; }
+
+.titre-page { font: 700 var(--taille-xl)/1.25 var(--police-titre); }
+
+.titre-section {
+  margin-block-end: var(--espace-m);
+  font: 700 var(--taille-l)/1.3 var(--police-titre);
+}
+
+/* Lien « retour » : pastille avec flèche + libellé */
+.retour {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: .625rem;
+  color: var(--texte-doux);
+}
+.retour .icone {
+  box-sizing: content-box;
+  padding: .45rem;
+  border: 1px solid var(--brun);
+  border-radius: var(--rayon-image);
+  color: var(--texte);
+}
+
+
+/* 5. ILLUSTRATION DE PLAT (couleurs variées d'une carte à l'autre) --------- */
+.plat {
+  inline-size: var(--taille-plat, 3.5rem);
+  aspect-ratio: 1;
+}
+.plat__assiette { fill: var(--surface); stroke: var(--bordure); stroke-width: 2; }
+.plat__a { fill: var(--c1); }
+.plat__b { fill: var(--c2); }
+.plat__c { fill: var(--c3); }
+.plat__herbe { fill: none; stroke: var(--plat-herbe); stroke-width: 3; stroke-linecap: round; }
+
+li:nth-child(4n+1) .plat { --c1: var(--plat-vert);     --c2: var(--terracotta-clair); --c3: var(--plat-sable); }
+li:nth-child(4n+2) .plat { --c1: var(--plat-brique);   --c2: var(--plat-moutarde);    --c3: var(--plat-vert); }
+li:nth-child(4n+3) .plat { --c1: var(--plat-moutarde); --c2: var(--plat-brique);      --c3: var(--plat-vert); }
+li:nth-child(4n)   .plat { --c1: var(--plat-sable);    --c2: var(--plat-brique);      --c3: var(--plat-vert); }
+
+
+/* 6. BANDEAU D'INSPIRATION (accueil, mobile) : défilement tactile ---------- */
+.carrousel {
+  display: flex;
+  gap: var(--espace-s);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.carrousel li { flex: 0 0 85%; scroll-snap-align: start; }
+
+.slide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espace-s);
+  block-size: 9.5rem;
+  border-radius: var(--rayon-carte);
+  background: var(--sauge-clair);
+  font: 700 var(--taille-s) var(--police-titre);
+  --taille-plat: 5.5rem;
+}
+
+
+/* 7. GRILLE DE CARTES : une colonne sur mobile ----------------------------- */
+.grille {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--espace-m);
+}
+
+/* La carte : image à gauche, texte à droite (flex sur un seul axe) */
+.carte {
+  position: relative;               /* ancre le lien étendu à toute la carte */
+  display: flex;
+  align-items: center;
+  gap: .875rem;
+  padding: .75rem;
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-carte);
+  background: var(--surface);
+  box-shadow: var(--ombre);
+}
+.carte:hover { box-shadow: var(--ombre-survol); }
+.carte[hidden] { display: none; }   /* écarte les cartes filtrées (le « display » ci-dessus l'emporterait sur [hidden]) */
+
+.carte__image {
+  flex: none;
+  display: grid;
+  place-items: center;
+  inline-size: 3.75rem;
+  aspect-ratio: 1;
+  border-radius: var(--rayon-image);
+  background: var(--sauge-clair);
+}
+
+.carte__corps { flex: 1; min-inline-size: 0; }   /* min 0 : le titre peut passer à la ligne */
+
+.carte__titre {
+  margin-block-end: var(--espace-xs);
+  font: 700 var(--taille-m)/1.3 var(--police-titre);
+}
+
+/* Le lien du titre couvre toute la carte, mais le nom accessible reste le titre */
+.carte__titre a::after { content: ""; position: absolute; inset: 0; border-radius: var(--rayon-carte); }
+.carte__titre a:focus-visible { outline: none; }
+.carte__titre a:focus-visible::after { outline: 3px solid var(--brun); outline-offset: -3px; }  /* à l'intérieur : la carte bureau coupe ce qui dépasse */
+
+.carte__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espace-xs) .5rem;
+  font-size: var(--taille-xs);
+  color: var(--texte-doux);
+}
+
+.tag {
+  padding: .125rem .625rem;
+  border-radius: var(--rayon-pilule);
+  background: var(--terracotta-clair);
+  color: var(--texte);
+  font-size: var(--taille-xs);
+  font-weight: 600;
+}
+
+
+/* 8. PAGE RECHERCHE : filtres ---------------------------------------------- */
+.mise-en-page { display: flex; flex-direction: column; gap: var(--espace-l); }
+
+.filtres { display: flex; flex-direction: column; gap: var(--espace-l); }
+
+.groupe { min-inline-size: 0; margin: 0; padding: 0; border: 0; }   /* réinitialise <fieldset> */
+.groupe legend {
+  padding: 0;
+  margin-block-end: var(--espace-s);
+  font-size: var(--taille-xs);
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--texte-doux);
+}
+
+.choix { display: flex; flex-wrap: wrap; gap: var(--espace-s); }
+
+/* Puce = case à cocher / bouton radio natif, masqué mais utilisable au clavier */
+.puce { position: relative; }
+.puce input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.puce span {
+  display: block;
+  padding: .4375rem 1rem;
+  border: 1px solid var(--brun);
+  border-radius: var(--rayon-pilule);
+}
+.puce:hover span { background: var(--surface); }
+.puce input:checked + span { background: var(--sauge-clair); }
+.puce input:checked + span::before { content: "✓ "; }   /* l'état ne repose pas que sur la couleur */
+.puce input:focus-visible + span { outline: 3px solid var(--brun); outline-offset: 2px; }
+
+/* Barre de recherche (nom de recette ou aliment) */
+.barre { display: flex; flex-direction: column; gap: var(--espace-s); }
+.barre label {                                   /* même style que les titres de filtres */
+  font-size: var(--taille-xs);
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--texte-doux);
+}
+.champ {
+  display: flex;
+  align-items: center;
+  max-inline-size: 36rem;
+  min-block-size: 3.125rem;
+  border: 1px solid var(--brun);
+  border-radius: var(--rayon-pilule);
+  background: var(--surface);
+}
+.champ:focus-within { outline: 3px solid var(--brun); outline-offset: 3px; }
+.champ input {
+  flex: 1;
+  min-inline-size: 0;                            /* permet au champ de rétrécir sans déborder */
+  align-self: stretch;
+  padding-inline: var(--espace-m) 0;
+  border: 0;
+  outline: 0;                                    /* le focus est dessiné par .champ */
+  background: transparent;
+  color: var(--texte);
+  font: inherit;
+  appearance: none;
+}
+.champ input::placeholder { color: var(--texte-doux); opacity: 1; }
+.champ__bouton {
+  display: grid;
+  place-items: center;
+  flex: none;
+  inline-size: 3.125rem;
+  block-size: 3.125rem;
+  border: 0;
+  border-radius: var(--rayon-pilule);
+  background: transparent;
+  color: var(--terracotta);
+  cursor: pointer;
+}
+.champ__bouton:hover { color: var(--terracotta-survol); }
+
+.compteur { margin-block-end: var(--espace-m); color: var(--texte-doux); }
+#resultats { scroll-margin-top: var(--espace-m); }
+
+
+/* 9. PAGE RECETTE ---------------------------------------------------------- */
+.recette { display: grid; gap: var(--espace-l); }
+
+.recette__image {
+  display: grid;
+  place-items: center;
+  block-size: 11.875rem;
+  border-radius: var(--rayon-carte);
+  background: var(--sauge-clair);
+  --taille-plat: 9rem;
+  --c1: var(--plat-brique); --c2: var(--plat-moutarde); --c3: var(--plat-vert);   /* hors liste : couleurs données ici */
+}
+
+.recette__infos { display: flex; flex-direction: column; gap: var(--espace-m); }
+
+.infos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espace-s);
+}
+.infos li:not(.tag) {
+  display: flex;
+  align-items: center;
+  gap: .375rem;
+  padding: .25rem .75rem;
+  border: 1px solid var(--brun);
+  border-radius: var(--rayon-pilule);
+  font-size: var(--taille-xs);
+  color: var(--texte-doux);
+}
+
+.ingredient {
+  display: flex;
+  align-items: center;
+  gap: .625rem;
+  padding-block: var(--espace-xs);
+  cursor: pointer;
+}
+.ingredient input { flex: none; inline-size: 1.25rem; block-size: 1.25rem; margin: 0; accent-color: var(--plat-herbe); }
+.ingredient input:checked + span { color: var(--texte-doux); text-decoration: line-through; }
+
+.etapes { display: flex; flex-direction: column; gap: .875rem; counter-reset: etape; }
+.etapes li { display: flex; align-items: flex-start; gap: .75rem; counter-increment: etape; }
+.etapes li::before {
+  content: counter(etape);
+  flex: none;
+  display: grid;
+  place-items: center;
+  inline-size: 1.5rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--sauge);
+  color: var(--sauge-texte);
+  font-size: var(--taille-xs);
+  font-weight: 700;
+}
+
+
+/* 10. PAGE AUCUN RÉSULTAT -------------------------------------------------- */
+.vide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espace-m);
+  padding-block: var(--espace-xl);
+  text-align: center;
+}
+.vide__icone {
+  display: grid;
+  place-items: center;
+  inline-size: 6.25rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--peche);
+}
+.vide__icone .icone { inline-size: 2.75rem; block-size: 2.75rem; color: var(--texte); }
+.vide p { max-inline-size: 26rem; color: var(--texte-doux); }
+.vide .bouton { margin-block-start: var(--espace-s); padding-inline: var(--espace-l); }
+
+
+/* 11. BUREAU : à partir de 768 px ------------------------------------------ */
+@media (min-width: 768px) {
+  :root { --marge: 3rem; }
+
+  /* En-tête : logo et champ de recherche sur une ligne */
+  .entete { border-bottom: 1px solid var(--bordure); }
+  .entete__contenu {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--espace-l);
+    block-size: 4.875rem;
+    padding-block: 0;
+  }
+  .recherche {
+    inline-size: 26.25rem;
+    max-inline-size: 100%;
+    min-block-size: 2.75rem;
+    border: 1px solid var(--brun);
+    background: var(--surface);
+    color: var(--texte-doux);
+    font-weight: 400;
+  }
+  .recherche:hover { background: var(--fond); }
+  .icone--fleche { display: none; }
+
+  main { padding-block: 2.25rem 3rem; }
+  .inspiration { display: none; }
+  .titre-page, .titre-section { font-size: var(--taille-xxl); }
+  .titre-section { margin-block-end: var(--espace-l); }
+
+  /* Grille : autant de colonnes de 17 rem minimum que la largeur le permet
+     (2 vers 768 px, 3 vers 1024 px, 4 à 1440 px) */
+  .grille {
+    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+    gap: var(--espace-l);
+  }
+
+  /* Carte verticale : image pleine largeur au-dessus du texte */
+  .carte {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  .carte__image {
+    inline-size: auto;
+    aspect-ratio: auto;
+    block-size: 8rem;
+    border-radius: 0;
+    --taille-plat: 5.25rem;
+  }
+  .carte__corps { padding: var(--espace-m); }
+
+  /* Recherche : panneau de filtres à gauche, résultats à droite */
+  .mise-en-page {
+    display: grid;
+    grid-template-columns: 18rem minmax(0, 1fr);
+    align-items: start;
+    gap: var(--espace-xl);
+  }
+
+  /* Recette : image puis étapes à gauche, infos à droite */
+  .recette {
+    grid-template-columns: minmax(0, 1fr) 23.75rem;
+    grid-template-areas: "image infos" "etapes infos";
+    align-items: start;
+    gap: var(--espace-xl);
+  }
+  .recette__image { grid-area: image; block-size: 18.75rem; --taille-plat: 13rem; }
+  .recette__infos { grid-area: infos; }
+  .recette__etapes { grid-area: etapes; }
+}

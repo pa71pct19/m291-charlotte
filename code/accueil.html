@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Greenplate – Recettes saines et rapides</title>
+  <meta name="description" content="Trouve en quelques secondes une recette saine à partir d'un ingrédient que tu as déjà chez toi.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caladea:wght@700&family=Poppins:wght@400;600&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Icônes et illustration de plat, définies une seule fois puis réutilisées avec <use> -->
+  <svg class="sprite" aria-hidden="true">
+    <symbol id="i-recherche" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+    <symbol id="i-fleche" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+    <symbol id="i-horloge" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="plat" viewBox="0 0 120 120">
+      <circle class="plat__assiette" cx="60" cy="62" r="42"/>
+      <ellipse class="plat__a" cx="48" cy="52" rx="17" ry="13"/>
+      <ellipse class="plat__b" cx="76" cy="58" rx="13" ry="10"/>
+      <ellipse class="plat__c" cx="58" cy="76" rx="11" ry="8"/>
+      <path class="plat__herbe" d="M38 40c4-10 10-16 14-18"/>
+    </symbol>
+  </svg>
+
+  <header class="entete">
+    <div class="conteneur entete__contenu">
+      <h1 class="logo"><a href="accueil.html">Greenplate</a></h1>
+      <a class="recherche" href="recherche.html">
+        <svg class="icone" aria-hidden="true"><use href="#i-recherche"/></svg>
+        <span>Rechercher un ingrédient</span>
+        <svg class="icone icone--fleche" aria-hidden="true"><use href="#i-fleche"/></svg>
+      </a>
+    </div>
+  </header>
+
+  <main class="conteneur">
+
+    <!-- Mobile uniquement : bandeau d'inspiration à faire glisser -->
+    <section class="inspiration" aria-labelledby="titre-inspiration">
+      <h2 class="surtitre" id="titre-inspiration">Inspiration de plats</h2>
+      <ul class="carrousel">
+        <li><a class="slide" href="recette.html"><svg class="plat" aria-hidden="true"><use href="#plat"/></svg>Bowl de quinoa croquant</a></li>
+        <li><a class="slide" href="recette.html"><svg class="plat" aria-hidden="true"><use href="#plat"/></svg>Soupe de courgettes au basilic</a></li>
+        <li><a class="slide" href="recette.html"><svg class="plat" aria-hidden="true"><use href="#plat"/></svg>Wrap avocat et poulet grillé</a></li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="titre-recettes">
+      <h2 class="titre-section" id="titre-recettes">Toutes les recettes</h2>
+      <ul class="grille">
+        <li class="carte">
+          <div class="carte__image"><svg class="plat" aria-hidden="true"><use href="#plat"/></svg></div>
+          <div class="carte__corps">
+            <h3 class="carte__titre"><a href="recette.html">Bowl de quinoa croquant</a></h3>
+            <p class="carte__meta"><svg class="icone" aria-hidden="true"><use href="#i-horloge"/></svg>15 min · Facile<span class="tag">sain</span></p>
+          </div>
+        </li>
+        <li class="carte">
+          <div class="carte__image"><svg class="plat" aria-hidden="true"><use href="#plat"/></svg></div>
+          <div class="carte__corps">
+            <h3 class="carte__titre"><a href="recette.html">Soupe de courgettes au basilic</a></h3>
+            <p class="carte__meta"><svg class="icone" aria-hidden="true"><use href="#i-horloge"/></svg>20 min · Facile<span class="tag">sain</span></p>
+          </div>
+        </li>
+        <li class="carte">
+          <div class="carte__image"><svg class="plat" aria-hidden="true"><use href="#plat"/></svg></div>
+          <div class="carte__corps">
+            <h3 class="carte__titre"><a href="recette.html">Wrap avocat et poulet grillé</a></h3>
+            <p class="carte__meta"><svg class="icone" aria-hidden="true"><use href="#i-horloge"/></svg>10 min · Facile<span class="tag">sain</span></p>
+          </div>
+        </li>
+        <li class="carte">
+          <div class="carte__image"><svg class="plat" aria-hidden="true"><use href="#plat"/></svg></div>
+          <div class="carte__corps">
+            <h3 class="carte__titre"><a href="recette.html">Curry de lentilles corail</a></h3>
+            <p class="carte__meta"><svg class="icone" aria-hidden="true"><use href="#i-horloge"/></svg>30 min · Moyen<span class="tag">sain</span></p>
+          </div>
+        </li>
+        <li class="carte">
+          <div class="carte__image"><svg class="plat" aria-hidden="true"><use href="#plat"/></svg></div>
+          <div class="carte__corps">
+            <h3 class="carte__titre"><a href="recette.html">Salade de riz complet aux herbes</a></h3>
+            <p class="carte__meta"><svg class="icone" aria-hidden="true"><use href="#i-horloge"/></svg>18 min · Facile<span class="tag">sain</span></p>
+          </div>
+        </li>
+        <li class="carte">
+          <div class="carte__image"><svg class="plat" aria-hidden="true"><use href="#plat"/></svg></div>
+          <div class="carte__corps">
+            <h3 class="carte__titre"><a href="recette.html">Galettes de courgette légères</a></h3>
+            <p class="carte__meta"><svg class="icone" aria-hidden="true"><use href="#i-horloge"/></svg>22 min · Moyen<span class="tag">sain</span></p>
+          </div>
+        </li>
+        <li class="carte">
+          <div class="carte__image"><svg class="plat" aria-hidden="true"><use href="#plat"/></svg></div>
+          <div class="carte__corps">
+            <h3 class="carte__titre"><a href="recette.html">Bowl de patate douce rôtie</a></h3>
+            <p class="carte__meta"><svg class="icone" aria-hidden="true"><use href="#i-horloge"/></svg>25 min · Facile<span class="tag">sain</span></p>
+          </div>
+        </li>
+        <li class="carte">
+          <div class="carte__image"><svg class="plat" aria-hidden="true"><use href="#plat"/></svg></div>
+          <div class="carte__corps">
+            <h3 class="carte__titre"><a href="recette.html">Poêlée de légumes de saison</a></h3>
+            <p class="carte__meta"><svg class="icone" aria-hidden="true"><use href="#i-horloge"/></svg>16 min · Facile<span class="tag">sain</span></p>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+  </main>
+</body>
+</html>

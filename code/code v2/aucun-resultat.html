@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aucune recette trouvée – Greenplate</title>
+  <meta name="description" content="Aucune recette ne correspond à ta recherche. Essaie d'autres filtres ou explore toutes les recettes.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caladea:wght@700&family=Poppins:wght@400;600&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <svg class="sprite" aria-hidden="true">
+    <symbol id="i-retour" viewBox="0 0 24 24"><path d="m15 6-6 6 6 6"/></symbol>
+    <symbol id="i-aucun" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5M8 11h6"/></symbol>
+  </svg>
+
+  <header class="entete">
+    <div class="conteneur entete__contenu">
+      <p class="logo"><a href="accueil.html">Greenplate</a></p>
+    </div>
+  </header>
+
+  <main class="conteneur">
+    <a class="retour" href="recherche.html"><svg class="icone" aria-hidden="true"><use href="#i-retour"/></svg>Modifier la recherche</a>
+
+    <section class="vide">
+      <div class="vide__icone"><svg class="icone" aria-hidden="true"><use href="#i-aucun"/></svg></div>
+      <h1 class="titre-page">Aucune recette trouvée</h1>
+      <p>Essaie une autre combinaison de filtres ou explore toutes les recettes disponibles.</p>
+      <a class="bouton" href="accueil.html">Voir toutes les recettes</a>
+    </section>
+  </main>
+</body>
+</html>
